@@ -1,0 +1,13 @@
+file:   CnRssPoller/Todo.txt
+author: rbw
+Date;   Sun  4 Dec 18:13:02 UTC 2016
+
+CRP-001
+
+  Clean up Readme files such that it's reasonably maintainable and
+  installable.
+
+CRP-002
+
+  Write new data to Kafka
+

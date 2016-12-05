@@ -1,0 +1,19 @@
+html,body,input {
+  font-family:     arial,sans-serif;
+  background:      #aa8;
+  }
+h1 {
+  color:           #445;
+  }
+table {            
+  border-collapse: collapse;
+  }
+td {
+  vertical-align:  top;
+  background:      #eec;
+  padding-top:     0px;
+  padding-left:    4px;
+  /*font-size:     14px;*/ /* 16 px seems to be the default */
+  font-size:       11pt; /* 12 pt seems to be the default */
+  }
+
