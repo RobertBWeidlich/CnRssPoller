@@ -10,3 +10,6 @@
 from cn_hpe_json_kafka_producer import CnHpeJsonKafkaProducer
 
 print "Hello!"
+
+cnj = CnHpeJsonKafkaProducer("")
+cnj.say_hello()

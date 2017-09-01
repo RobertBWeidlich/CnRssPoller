@@ -48,10 +48,9 @@ To run CN RSS Poller:
   5B. In a third window run:
 
        ##########################################################
-       NOTE: you must set up credentials for FTP destination host
-       before running this
+       # NOTE: you must set up credentials for FTP destination host
+       # before running this
        ##########################################################
-
        cd $CN_HOME
        ./cn_ftp_proc.py &
 
@@ -62,4 +61,11 @@ Additional projects:
 
   cn_proc_rss_to_html.py:
     Convert latest data to HTML
+    
+### IntelliJ Issues
+Refer to this to get IntelliJ to run Unit Tests in separate directories:
+
+(search down for "In IntelliJ it's a littler different...)
+
+https://stackoverflow.com/questions/13994846/intellij-python-plugin-run-classpath
 
