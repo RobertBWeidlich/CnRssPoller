@@ -13,6 +13,8 @@ Date:   Wed Sep  6 18:46:13 PDT 2017
   
 ##Other
 
-  * Clean up Readme files such that it's reasonably maintainable and
+* Clean data, especially HTML special characters
+* Fix HTTP polling errors
+* Clean up Readme files such that it's reasonably maintainable and
   installable.
   
