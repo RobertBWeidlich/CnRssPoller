@@ -10,8 +10,10 @@ import sys, os
 
 
 class CnHpeJsonKafkaProducer():
-    def __init__(self, kafka_broker_url):
+    def __init__(self, kafka_broker_url, kafka_topic):
         self.kafka_broker_url = kafka_broker_url
+        self.kafka_topic = kafka_topic
+        print "CnHpeJsonKafkaProducer() ctor"
 
     def say_hello(self):
         print "Hello from CnHpeJsonKafkaProducer()"

@@ -9,6 +9,9 @@
 # import sys, os
 from cn_hpe_json_kafka_producer import CnHpeJsonKafkaProducer
 
+kafka_url = "192.168.1.204:9092"
+kafka_topic = "cn_rsspoller-json-data"
+
 td1 = {}
 td1['path'] =    "/data1/cn/rss_raw/2017/09/05/23/cn_rss_raw-news.australia.sydneymorningherald-20170905.2334.13.xml"
 td1['src'] =     "news.australia.sydneymorningherald"
@@ -81,5 +84,5 @@ print "td3['text1']"
 print td3['text1']
 
 
-cnj = CnHpeJsonKafkaProducer("")
+cnj = CnHpeJsonKafkaProducer(kafka_url, kafka_topic)
 cnj.say_hello()
