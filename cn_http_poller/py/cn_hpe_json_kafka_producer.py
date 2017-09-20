@@ -7,6 +7,7 @@
 ########################################################################
 # import os, sys, time, re, anydbm
 import sys, os
+from kafka import KafkaProducer
 
 
 class CnHpeJsonKafkaProducer():
@@ -14,6 +15,15 @@ class CnHpeJsonKafkaProducer():
         self.kafka_broker_url = kafka_broker_url
         self.kafka_topic = kafka_topic
         print "CnHpeJsonKafkaProducer() ctor"
+        # assert isinstance(self.kafka_broker_url, object)
+        self.kafka_producer = KafkaProducer(bootstrap_servers=self.kafka_broker_url)
+        # self.kafka_producer = KafkaProducer()
 
     def say_hello(self):
         print "Hello from CnHpeJsonKafkaProducer()"
+
+    def send_json_to_kafka(self, json_msg):
+        self.kafka_producer.send(self.kafka_topic, json_msg)
+        self.kafka_producer.flush()
+        # convert to byte??
+

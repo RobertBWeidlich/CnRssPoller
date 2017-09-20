@@ -5,12 +5,15 @@
 # date:    Wed Aug 30 18:01:14 PDT 2017
 # purpose: Unit Test for cn_hpe_json_kafka_producer.py
 ########################################################################
-# import os, sys, time, re, anydbm
+import os, sys, time, re, anydbm
+#import re, anydbm
 # import sys, os
+import json
 from cn_hpe_json_kafka_producer import CnHpeJsonKafkaProducer
 
+
 kafka_url = "192.168.1.204:9092"
-kafka_topic = "cn_rsspoller-json-data"
+kafka_topic = "cn-rsspoller-json-data"
 
 td1 = {}
 td1['path'] =    "/data1/cn/rss_raw/2017/09/05/23/cn_rss_raw-news.australia.sydneymorningherald-20170905.2334.13.xml"
@@ -74,15 +77,31 @@ for live sporting events as it seeks to keep people glued to its expanding
 media network, even as it missed out on the Indian Premier League.
 """
 
-print "td1:"
-print td1
-print "td2:"
-print td2
-print "td3:"
-print td3
-print "td3['text1']"
-print td3['text1']
-
+td1_json = json.dumps(td1, indent=2)
+td2_json = json.dumps(td2, indent=2)
+td3_json = json.dumps(td3, indent=2)
 
 cnj = CnHpeJsonKafkaProducer(kafka_url, kafka_topic)
 cnj.say_hello()
+
+print "writing to kafka (td1_json):"
+print "td1_json:"
+print td1_json
+cnj.send_json_to_kafka(td1_json)
+print
+time.sleep(1.0)
+
+print "writing to kafka (td2_json):"
+print "td2_json:"
+print td2_json
+cnj.send_json_to_kafka(td2_json)
+print
+time.sleep(1.0)
+
+print "writing to kafka (td3_json):"
+print "td3_json:"
+print td3_json
+cnj.send_json_to_kafka(td3_json)
+print
+time.sleep(1.0)
+
