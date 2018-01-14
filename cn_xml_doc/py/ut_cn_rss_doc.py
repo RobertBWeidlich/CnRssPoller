@@ -6,34 +6,20 @@
 # date:    101219.2100
 # purpose: Unit test for cn_xml_doc.py
 ########################################################################
-import sys
+import os, sys
 from cn_rss_doc import CnRssDocument
 
 def main():
-  ## PSHB data
+  cd = os.getcwd()
+  print "current directory: " + cd
 
-  ## RSS data
-  path_101216_01_rss = \
-      '/data2/cn/rss_raw/2010/12/17/01/' + \
-      'cn_rss_raw-blog.andrewsullivan-20101217.0106.13.xml'
-  path_101218_01_rss = \
-      '/data2/cn/rss_raw/2010/12/18/23/' + \
-      'cn_rss_raw-blog.andrewsullivan-20101218.2306.13.xml'
-  path_101230_01_rss = \
-      '/data2/cn/rss_raw/2010/12/30/01/' + \
-      'cn_rss_raw-blog.andrewsullivan-20101230.0151.13.xml'
-  path_20130310 = \
-      '/data1/cn/rss_raw/2013/03/10/00/' + \
-      'cn_rss_raw-news.washpost-20130310.0004.04.xml'
+  data_dir = "../../resources/data/"
+  path_01 = data_dir + "cn_rss_raw-news.latimes-20180113.2304.13.xml"
+  path_02 = data_dir + "cn_rss_raw-news.sweden.thelocal-20180113.2304.13.xml"
+  path_03 = data_dir + "cn_rss_raw-news.upi-20180113.2305.13.xml"
+  path_04 = data_dir + "cn_rss_raw-news.washpost.world-20180113.2307.13.xml"
 
-  ## Atom data
-  path_101218_01_atom = \
-      '/data2/cn/rss_raw/2010/12/18/23/' + \
-      'cn_rss_raw-aggr.huffpost-20101218.2321.13.xml'
-
-  ##path = path_101218_01_atom
-  #path = path_101230_01_rss
-  path = path_20130310
+  path = path_04
 
   print 'testing on file \"%s\"' % path
 
