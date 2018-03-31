@@ -9,7 +9,6 @@
 import sys, os
 from kafka import KafkaProducer
 
-
 class CnHpeJsonKafkaProducer():
     def __init__(self, kafka_broker_url, kafka_topic):
         self.kafka_broker_url = kafka_broker_url
