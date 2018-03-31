@@ -1,3 +1,36 @@
-.pyc  # Python executable files
-.swp  # vim backup files
+# Puppet
+.librarian/
 
+# Eclipse
+.classpath
+.project
+.settings/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Java
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# IntelliJ
+.idea/
+.iml
+
+# Python
+*.pyc
+
+# vim backup files
+.swp
+
+# Maven
+dependency-reduced-pom.xml
+
+# NPM
+node_modules/
+bower_components/
+npm-debug.log
