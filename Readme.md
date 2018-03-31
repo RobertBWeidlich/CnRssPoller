@@ -1,6 +1,6 @@
 file:    cn_http_poller/py/Readme.py
 author:  rbw
-date:    Wed Mar 20 21:18:17 EDT 2013
+date:    Sat Mar 31 14:26:40 PDT 2018
 purpose: How to bootstrap CN RSS polling and processing tools
 
 To run CN RSS Poller:
