@@ -12,8 +12,24 @@
 ########################################################################
 import os, sys
 
+
 def proc_file_to_solr_json(in_path, out_path):
-    pass
+    in_file = open(in_path, 'r')
+    line_no = 0
+    for line in in_file.readlines():
+        # 1. trim newline char
+        line = line.rstrip()
+
+        # 2. skip comments
+        if (len(line) > 0) and (line[0] == "#"):
+            continue
+
+        line_no += 1
+        print ">>>%s<<<" % line
+        if line_no > 50:
+            break
+
+    print "HERE - 1420"
 
 
 if __name__ == '__main__':
@@ -25,7 +41,7 @@ if __name__ == '__main__':
     # print "current dir:   %s" % os.getcwd()
     in_file = sys.argv[1]
     out_file = sys.argv[2]
-    proc_file_to_solr_json(in_file, out_file):
+    proc_file_to_solr_json(in_file, out_file)
 
     sys.exit(0)
 
