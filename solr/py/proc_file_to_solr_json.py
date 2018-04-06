@@ -11,11 +11,30 @@
 #     /usr/local/solr-7.2.1/example/exampledocs/books.json
 ########################################################################
 import os, sys
+import re
+import json
 
 
 def proc_file_to_solr_json(in_path, out_path):
+    #
+    # regex to match fields such as "abc-def:" or "abcdef:"
+    #
+    ps1 = '^([a-zA-Z][a-zA-Z-]*)\:$'
+    po1 = re.compile(ps1)
+
+    #
+    # regex to match fields such as "abc-def: data" or "abcdef: data"
+    #
+    ps2 = '^([a-zA-Z][a-zA-Z-]*)\:\s*(\S.*)$'
+    po2 = re.compile(ps2)
+
+    pl = []  # list to convert to JSON
+    po = {}  # dictionaries to store in list pl
+    inside_item = False
+    cur_field = ""
     in_file = open(in_path, 'r')
     line_no = 0
+
     for line in in_file.readlines():
         # 1. trim newline char
         line = line.rstrip()
@@ -25,9 +44,43 @@ def proc_file_to_solr_json(in_path, out_path):
             continue
 
         line_no += 1
-        print ">>>%s<<<" % line
-        if line_no > 50:
+        print "%d >>>%s<<<" % (line_no, line)
+        if line_no > 30:
             break
+
+        if line == "end-item:":
+            if len(po) > 0:
+                pl.append(po)
+                po = {}
+            inside_item = False
+            continue
+        elif line == "start-item:":
+            if len(po) > 0:
+                pl.append(po)
+                po = {}
+            inside_item = True
+            continue
+
+        if inside_item and len(line) > 0:
+            # new field?
+            pm1 = po1.match(line)
+            if pm1:
+                print "MATCH 1"
+                pass
+            else:
+                pm2 = po2.match(line)
+                if pm2:
+                    print "MATCH 2"
+                    pass
+
+
+            # continuation line
+            if line[0] == ' ':
+                pass
+
+    in_file.close()
+
+
 
     print "HERE - 1420"
 
