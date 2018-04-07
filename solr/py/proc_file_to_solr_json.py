@@ -36,6 +36,7 @@ def proc_file_to_solr_json(in_path, out_path):
     line_no = 0
 
     for line in in_file.readlines():
+        line_no += 1
         # 1. trim newline char
         line = line.rstrip()
 
@@ -43,7 +44,6 @@ def proc_file_to_solr_json(in_path, out_path):
         if (len(line) > 0) and (line[0] == "#"):
             continue
 
-        line_no += 1
         print "%d >>>%s<<<" % (line_no, line)
         if line_no > 30:
             break
@@ -53,36 +53,49 @@ def proc_file_to_solr_json(in_path, out_path):
                 pl.append(po)
                 po = {}
             inside_item = False
+            cur_field = ""
             continue
         elif line == "start-item:":
             if len(po) > 0:
                 pl.append(po)
                 po = {}
             inside_item = True
+            cur_field = ""
             continue
 
         if inside_item and len(line) > 0:
             # new field?
             pm1 = po1.match(line)
             if pm1:
+                print "group 1 0: \"%s\": " % pm1.group(0)
+                print "group 1 1: \"%s\": " % pm1.group(1)
+                fld_name = pm1.group(1)
+                cur_field = fld_name
+                po[cur_field] = ""
                 print "MATCH 1"
-                pass
             else:
                 pm2 = po2.match(line)
                 if pm2:
+                    print "group 2 0: \"%s\": " % pm2.group(0)
+                    print "group 2 1: \"%s\": " % pm2.group(1)
+                    print "group 2 2: \"%s\": " % pm2.group(2)
+                    fld_name = pm2.group(1)
+                    cur_field = fld_name
+                    if cur_field == 'text1':
+                        pass
+                    text = pm2.group(2).strip()
+                    po[cur_field] = text
                     print "MATCH 2"
-                    pass
 
-
-            # continuation line
+            #  continuation line
             if line[0] == ' ':
-                pass
+                text = line[0]
+                try:
+                    po[cur_field] = text
+                except:
+                    print "ERROR: cur_field %s not correct" % cur_field
 
     in_file.close()
-
-
-
-    print "HERE - 1420"
 
 
 if __name__ == '__main__':
