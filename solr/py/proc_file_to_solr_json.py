@@ -3,7 +3,7 @@
 ########################################################################
 # file:    proc_file_to_solr_json.py
 # author:  rbw
-# date:    Mon Apr  2 04:53:14 PDT 2018
+# date:    Sun Apr  8 07:46:20 PDT 2018
 # purpose: Convert data in CN RSS proc format to Solr JSON format
 #   CN RSS proc format:
 #     /data1/cn/rss_proc/2018
@@ -17,15 +17,15 @@ import json
 
 def proc_file_to_solr_json(in_path, out_path):
     #
-    # regex to match fields such as "abc-def:" or "abcdef:"
+    # regex to match fields such as "abc-def7:" or "abcdef7:"
     #
-    ps1 = '^([a-zA-Z][a-zA-Z-]*)\:$'
+    ps1 = '^([a-zA-Z][a-zA-Z0-9-]*)\:$'
     po1 = re.compile(ps1)
 
     #
-    # regex to match fields such as "abc-def: data" or "abcdef: data"
+    # regex to match fields such as "abc-def7: data" or "abcdef7: data"
     #
-    ps2 = '^([a-zA-Z][a-zA-Z-]*)\:\s*(\S.*)$'
+    ps2 = '^([a-zA-Z][a-zA-Z0-9-]*)\:\s*(\S.*)$'
     po2 = re.compile(ps2)
 
     pl = []  # list to convert to JSON
@@ -45,9 +45,8 @@ def proc_file_to_solr_json(in_path, out_path):
             continue
 
         print "%d >>>%s<<<" % (line_no, line)
-        if line_no > 30:
-            break
-
+        #if line_no > 60:
+        #    break
         if line == "end-item:":
             if len(po) > 0:
                 pl.append(po)
@@ -67,33 +66,34 @@ def proc_file_to_solr_json(in_path, out_path):
             # new field?
             pm1 = po1.match(line)
             if pm1:
-                print "group 1 0: \"%s\": " % pm1.group(0)
-                print "group 1 1: \"%s\": " % pm1.group(1)
+                #print "group 1 0: \"%s\": " % pm1.group(0)
+                #print "group 1 1: \"%s\": " % pm1.group(1)
                 fld_name = pm1.group(1)
                 cur_field = fld_name
                 po[cur_field] = ""
-                print "MATCH 1"
+                #print "MATCH 1"
             else:
                 pm2 = po2.match(line)
                 if pm2:
-                    print "group 2 0: \"%s\": " % pm2.group(0)
-                    print "group 2 1: \"%s\": " % pm2.group(1)
-                    print "group 2 2: \"%s\": " % pm2.group(2)
+                    # print "group 2 0: \"%s\": " % pm2.group(0)
+                    # print "group 2 1: \"%s\": " % pm2.group(1)
+                    # print "group 2 2: \"%s\": " % pm2.group(2)
                     fld_name = pm2.group(1)
                     cur_field = fld_name
                     if cur_field == 'text1':
-                        pass
+                        print "HERE..."
                     text = pm2.group(2).strip()
                     po[cur_field] = text
-                    print "MATCH 2"
+                    # print "MATCH 2"
+                    continue
 
-            #  continuation line
-            if line[0] == ' ':
-                text = line[0]
-                try:
-                    po[cur_field] = text
-                except:
-                    print "ERROR: cur_field %s not correct" % cur_field
+                #  continuation line
+                if line[0] == ' ':
+                    text = line
+                    try:
+                        po[cur_field] += text
+                    except:
+                        print "ERROR: cur_field %s not correct" % cur_field
 
     in_file.close()
 
