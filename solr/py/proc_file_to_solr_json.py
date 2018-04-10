@@ -3,7 +3,7 @@
 ########################################################################
 # file:    proc_file_to_solr_json.py
 # author:  rbw
-# date:    Sun Apr  8 07:46:20 PDT 2018
+# date:    Tue Apr 10 16:48:25 PDT 2018
 # purpose: Convert data in CN RSS proc format to Solr JSON format
 #   CN RSS proc format:
 #     /data1/cn/rss_proc/2018
@@ -49,6 +49,11 @@ def proc_file_to_solr_json(in_path, out_path):
         #    break
         if line == "end-item:":
             if len(po) > 0:
+                #
+                # add "ingest_time" field
+                #
+                if po.has_key("tstamp"):
+                    po['ingest_time'] = convert_to_solr_timestamp(po['tstamp'])
                 pl.append(po)
                 po = {}
             inside_item = False
@@ -95,8 +100,30 @@ def proc_file_to_solr_json(in_path, out_path):
                     except:
                         print "ERROR: cur_field %s not correct" % cur_field
 
+    jo = json.dumps(pl, sort_keys=True, indent=2, encoding='latin-1')
     in_file.close()
+    out_file = open(out_path, 'w')
+    out_file.write(jo)
+    out_file.close()
 
+#
+# convert rss proc format timestamp: "20180331.0003.13"
+# to Solr format timestamp:        : "2018-03-31T00:03:13Z"
+#
+def convert_to_solr_timestamp(rp_ts):
+    solr_ts = "YYYY-MM-DDThh:mm:ssZ"
+    if len(rp_ts) < 16:
+        return solr_ts
+    yyyy = rp_ts[:4]
+    mo = rp_ts[4:6]
+    dd = rp_ts[6:8]
+    hh = rp_ts[9:11]
+    mn = rp_ts[11:13]
+    ss = rp_ts[14:16]
+
+    solr_ts = "%s-%s-%sT%s:%s:%sZ" % (yyyy, mo, dd, hh, mn, ss)
+
+    return solr_ts
 
 if __name__ == '__main__':
     argc = len(sys.argv)
@@ -110,4 +137,3 @@ if __name__ == '__main__':
     proc_file_to_solr_json(in_file, out_file)
 
     sys.exit(0)
-
