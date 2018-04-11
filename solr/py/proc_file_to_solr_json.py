@@ -3,7 +3,7 @@
 ########################################################################
 # file:    proc_file_to_solr_json.py
 # author:  rbw
-# date:    Tue Apr 10 16:48:25 PDT 2018
+# date:    Tue Apr 10 17:46:09 PDT 2018
 # purpose: Convert data in CN RSS proc format to Solr JSON format
 #   CN RSS proc format:
 #     /data1/cn/rss_proc/2018
@@ -34,6 +34,7 @@ def proc_file_to_solr_json(in_path, out_path):
     cur_field = ""
     in_file = open(in_path, 'r')
     line_no = 0
+    seq_no = 0
 
     for line in in_file.readlines():
         line_no += 1
@@ -49,6 +50,11 @@ def proc_file_to_solr_json(in_path, out_path):
         #    break
         if line == "end-item:":
             if len(po) > 0:
+                #
+                # add "seq_num" field
+                #
+                seq_no += 1
+                po['seq_no'] = seq_no
                 #
                 # add "ingest_time" field
                 #
