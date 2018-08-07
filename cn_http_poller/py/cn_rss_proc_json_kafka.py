@@ -100,6 +100,20 @@ def main(hostname):
         print ">>>" + line + "<<<"
 
 
+def hexdump(str_arg):
+    """
+    return string consisting of hexdump of str_arg
+    """
+    dstr = '#'
+    ci = 0
+    for c in str_arg:
+        dstr += ' %02x' % ord(c)
+        ci += 1
+        if (ci % 16) == 0:
+            dstr += '\n#'
+    return (dstr)
+
+
 if __name__ == '__main__':
     if len(sys.argv) < 2:
         # sys.stderr.write("usage: %s <config-file>\n" % sys.argv[0])
