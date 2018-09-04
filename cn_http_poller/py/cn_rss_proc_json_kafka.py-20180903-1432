@@ -1,0 +1,126 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+########################################################################
+# file:    cn_rss_proc_json_kafka.py  (RSS post-processor)
+# author:  rbw
+# date:    Mon Sep  3 14:14:39 PDT 2018
+# purpose: Post-processor for RSS files:
+#            1. dedup RSS data,
+#            2. convert to JSON
+#            3. archive JSON files - 1 per news item
+#            4. send JSON data to Kafka for additional analysis
+# note:    This is based on cn_rss_proc.py.  Run either that or
+#          this process, but not both.
+# dependencies:
+#          Unix pipe '/tmp/p_cn_hpe_out'
+########################################################################
+import os, sys, time, re, anydbm
+from cn_rss_doc import CnRssDocument
+import socket
+
+def main(hostname):
+    #
+    # get environmental variables, and verify they refer to existing
+    # objects
+    #
+    # (todo: put this in a separate file)
+    #
+    if not os.environ.has_key('CN_HOME'):
+        print 'ERROR: environmental variable \'CN_HOME\' not defined'
+        sys.exit(1)
+    ENV_CN_HOME = os.environ['CN_HOME']
+    if not os.path.exists(ENV_CN_HOME):
+        print 'ERROR: directory \"' + ENV_CN_HOME + '\" ' + \
+              'defined by environmental ' + \
+              'variable \'CN_HOME\'' + ' does not exist'
+        sys.exit(1)
+
+    if not os.environ.has_key('CN_DATA'):
+        print 'ERROR: environmental variable \'CN_DATA\' not defined'
+        sys.exit(1)
+    ENV_CN_DATA = os.environ['CN_DATA']
+    if not os.path.exists(ENV_CN_DATA):
+        print 'ERROR: directory \"' + ENV_CN_DATA + '\" ' + \
+              ' defined by environmental ' + \
+              'variable \'CN_DATA\'' + ' does not exist'
+        sys.exit(1)
+
+    if not os.environ.has_key('CN_PIPE'):
+        print 'ERROR: environmental variable \'CN_PIPE\' not defined'
+        sys.exit(1)
+    ENV_CN_PIPE = os.environ['CN_PIPE']
+    if not os.path.exists(ENV_CN_PIPE):
+        os.mkfifo(ENV_CN_PIPE)
+        print 'creating pipe file \"' + ENV_CN_PIPE + '\"'
+        # print 'ERROR: pipe file \"' + ENV_CN_PIPE + '\ " ' + \
+        #      'defined by environmental ' + \
+        #      'variable \'CN_PIPE\'' + ' does not exist'
+        # sys.exit(1)
+
+    if not os.environ.has_key('CN_TMP'):
+        print 'ERROR: environmental variable \'CN_TMP\' not defined'
+        sys.exit(1)
+    ENV_CN_TMP = os.environ['CN_TMP']
+    if not os.path.exists(ENV_CN_TMP):
+        print 'ERROR: tmp file \"' + ENV_CN_TMP + '\" ' + \
+              ' defined by environmental ' + \
+              'variable \'CN_TMP\'' + ' does not exist'
+        sys.exit(1)
+
+    if not os.environ.has_key('CN_WAIT_OFFSET'):
+        print 'ERROR: environmental variable \'CN_WAIT_OFFSET\' not defined'
+        sys.exit(1)
+    ENV_CN_WAIT_OFFSET = os.environ['CN_WAIT_OFFSET']
+
+    print 'ENV_CN_HOME:        ' + ENV_CN_HOME
+    print 'ENV_CN_DATA:        ' + ENV_CN_DATA
+    print 'ENV_CN_PIPE:        ' + ENV_CN_PIPE
+    print 'ENV_CN_TMP:         ' + ENV_CN_TMP
+    print 'ENV_CN_WAIT_OFFSET: ' + ENV_CN_WAIT_OFFSET
+
+    BASE_DIR_PROC_JSON = ENV_CN_DATA
+    if not BASE_DIR_PROC_JSON.endswith(os.sep):
+        BASE_DIR_PROC_JSON += os.sep
+    BASE_DIR_PROC_JSON += 'rss_proc_json'
+    print 'BASE_DIR_PROC_JSON: ' + BASE_DIR_PROC_JSON
+
+    POSTPROC_OUT_PIPE = ENV_CN_PIPE
+    WAIT_OFFSET = float(ENV_CN_WAIT_OFFSET)
+
+    f_pipe = open(POSTPROC_OUT_PIPE, 'r')
+
+    while True:
+        line = f_pipe.readline()
+        if len(line) < 1:  # producer has disconnected
+            print('waiting for CN RSS file producer to connect...')
+            time.sleep(1)
+            continue
+        line = line.strip()
+
+        print ">>>" + line + "<<<"
+
+
+def hexdump(str_arg):
+    """
+    return string consisting of hexdump of str_arg
+    """
+    dstr = '#'
+    ci = 0
+    for c in str_arg:
+        dstr += ' %02x' % ord(c)
+        ci += 1
+        if (ci % 16) == 0:
+            dstr += '\n#'
+    return (dstr)
+
+
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        # sys.stderr.write("usage: %s <config-file>\n" % sys.argv[0])
+        # sys.exit(1)
+        pass
+
+    # cfg_file = sys.argv[1]
+    # main(cfg_file)
+    hostname = socket.gethostname()
+    main(hostname)
