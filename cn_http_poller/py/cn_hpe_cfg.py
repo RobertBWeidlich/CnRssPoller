@@ -97,6 +97,7 @@ class CnHpeCfg():
       #   3. URL of site
       #
       toks = line.split()
+      print "toks: " + str(toks) # rbw
       if len(toks) < 3:
         sys.stderr.write(\
           'WARNING: config file \"%s\" line %d: expecting 3 tokens%s' \
@@ -109,6 +110,7 @@ class CnHpeCfg():
       #
       cfg_mins = []
       for min in cfg_mins_str:
+	print "min: " + str(min) # rbw
         cfg_mins.append(int(min))
         
       cfg_site_name = toks[1]

@@ -14,9 +14,17 @@
 # dependencies:
 #          Unix pipe '/tmp/p_cn_hpe_out'
 ########################################################################
-import os, sys, time, re, anydbm
-from cn_rss_doc import CnRssDocument
+import os
+import sys
+import time
+import re
+import anydbm
 import socket
+import json
+import uuid
+from time import gmtime
+from time import strftime
+from cn_rss_doc import CnRssDocument
 
 
 def main(hostname):
@@ -92,7 +100,7 @@ def main(hostname):
     o_path = set_output_path_proc(BASE_DIR_PROC)
     print('# opening \'%s\'' % o_path);
     ofp = open(o_path, 'a')
-    ofp.write('#starting cn_rss_proc.py\n')
+    ofp.write('# starting cn_rss_proc.py\n')
     ofp.flush()
     ofp_name = o_path
 
@@ -103,8 +111,8 @@ def main(hostname):
             time.sleep(1)
             continue
         line = line.strip()
-        # 20180903-1500
-        print "line>>>%s<<<" % line
+        ## 20180903-1500
+        #print "line>>>%s<<<" % line
 
         #
         # create output file - but only for new-day rollover
@@ -113,7 +121,7 @@ def main(hostname):
         if (o_path != ofp_name):
             ofp.flush()
             ofp.close()
-            print('## opening \'%s\'' % o_path);
+            print('## opening new JSON file \'%s\'' % o_path);
             ofp = open(o_path, 'a')
             ofp_name = o_path
 
@@ -122,6 +130,8 @@ def main(hostname):
 
 
 def proc_rss_file(path_arg, ofp_arg, tmp_dir):
+    #pod_flag = True
+    pod_flag = False
     of = ofp_arg
     fn_patt_str = '.*cn_rss_raw-(.*)-(\d{8}\.\d{4}\.\d{2})\.xml$'
     fn_patt_obj = re.compile(fn_patt_str)
@@ -143,12 +153,13 @@ def proc_rss_file(path_arg, ofp_arg, tmp_dir):
         # print('#WARNING: CnRssDocument(\"%s\", False) failed' % path_arg)
         # print('end-item:')
         # print('')
-        of.write('#WARNING: CnRssDocument(\"%s\", False) failed\n' % path_arg)
-        of.write('end-item:\n')
-        of.write('\n')
+        of.write('# WARNING: CnRssDocument(\"%s\", False) failed\n' % path_arg)
+        if pod_flag:
+            of.write('end-item:\n')
+            of.write('\n')
         return
-    print('#processing %s (%s)' % (path_arg, doc_type))
-    of.write('#processing %s (%s)\n' % (path_arg, doc_type))
+    print('# processing \'%s\' (%s)' % (path_arg, doc_type))
+    of.write('# processing %s (%s)\n' % (path_arg, doc_type))
     items = gxp.getItems()
     for item in items:
         uid = item['guid']
@@ -157,73 +168,141 @@ def proc_rss_file(path_arg, ofp_arg, tmp_dir):
         # if False:
         if len(uid) < 1:
             # todo: look for better alternatives for guid?? - rbw, 20121009.1943
-            if len(uid) < 1:
-                uid = item['url']
-                print ''
-                print '  item[guid]: \"%s\"' % item['guid']
-                print '    type: ', type(item['guid'])
-                print '    len:  ', len(item['guid'])
-                print '  item[title]: \"%s\"' % item['title']
-                print '  item[text]: \"%s\"' % item['text']
-                print '  item[pubdate]: \"%s\"' % item['pubdate']
-                print '  item[url]: \"%s\"' % item['url']
-                print '  item[author]: \"%s\"' % item['author']
-                print '  item[summary]: \"%s\"' % item['summary']
-                print ''
+            if false:
+                if len(uid) < 1:
+                    uid = item['url']
+                    print ''
+                    print '  item[guid]: \"%s\"' % item['guid']
+                    print '    type: ', type(item['guid'])
+                    print '    len:  ', len(item['guid'])
+                    print '  item[title]: \"%s\"' % item['title']
+                    print '  item[text]: \"%s\"' % item['text']
+                    print '  item[pubdate]: \"%s\"' % item['pubdate']
+                    print '  item[url]: \"%s\"' % item['url']
+                    print '  item[author]: \"%s\"' % item['author']
+                    print '  item[summary]: \"%s\"' % item['summary']
+                    print ''
 
         # if is_unique_guid(item['guid'], src, tstamp, tmp_dir):
         if is_unique_guid(uid, src, tstamp, tmp_dir):
+            so = {}
             # print('item:')
             # print(item)
             # db_key = db_key.encode('latin-1', 'replace')
+            if pod_flag:
+                of.write('start-item:\n')
+                of.write('path:    %s\n' % path_arg)
+                of.write('src:     %s\n' % src)
+                of.write('tstamp:  %s\n' % tstamp)
+
+            so['path'] = path_arg
+            so['src'] = src
+            so['tstamp'] = tstamp
+
+            ## of.write('pubdate: %s\n' % item['pubdate'])
+            ## of.write('author:  %s\n' % item['author'])
+            ## of.write('guid:    %s\n' % item['guid'])
+            ## of.write('url:     %s\n' % item['url'])
             pubdate_cl = item['pubdate'].encode('latin-1', 'replace')
             author_cl = item['author'].encode('latin-1', 'replace')
             guid_cl = item['guid'].encode('latin-1', 'replace')
             url_cl = item['url'].encode('latin-1', 'replace')
-            of.write('start-item:\n')
-            of.write('path:    %s\n' % path_arg)
-            of.write('src:     %s\n' % src)
-            of.write('tstamp:  %s\n' % tstamp)
-            # of.write('pubdate: %s\n' % item['pubdate'])
-            # of.write('author:  %s\n' % item['author'])
-            # of.write('guid:    %s\n' % item['guid'])
-            # of.write('url:     %s\n' % item['url'])
-            of.write('pubdate: %s\n' % pubdate_cl)
-            of.write('author:  %s\n' % author_cl)
-            of.write('guid:    %s\n' % guid_cl)
-            of.write('url:     %s\n' % url_cl)
+            if pod_flag:
+                of.write('pubdate: %s\n' % pubdate_cl)
+                of.write('author:  %s\n' % author_cl)
+                of.write('guid:    %s\n' % guid_cl)
+                of.write('url:     %s\n' % url_cl)
+            so['pubdate'] = pubdate_cl
+            so['author'] = author_cl
+            so['guid'] = guid_cl
+            so['url'] = url_cl
 
             text_title_clean = clean_text(item['title'])
             try:
-                # print('title:   %s' % text_title_clean)
-                of.write('title:   %s\n' % text_title_clean)
+                if pod_flag:
+                    of.write('title:   %s\n' % text_title_clean)
+                so['title'] = text_title_clean
             except:
                 try:
-                    # print('title:   %s' % text_title_clean.encode('latin-1', 'replace'))
-                    of.write('title:   %s\n' % text_title_clean.encode('latin-1', 'replace'))
+                    if pod_flag:
+                        of.write('title:   %s\n' % text_title_clean.encode('latin-1', 'replace'))
+                    so['title'] = text_title_clean.encode('latin-1', 'replace')
                 except:
-                    of.write('#ERROR: can\'t print title...\n')
+                    if pod_flag:
+                        of.write('#ERROR: can\'t print title...\n')
                     hstr = hexdump(text_title_clean)
-                    of.write('%s\n' % hstr)
+                    if pod_flag:
+                        of.write('%s\n' % hstr)
+                    so['title'] = hstr
 
-            # print('summary: %s' % item['summary'])
             sum_cl = item['summary'].encode('latin-1', 'replace')
-            of.write('summary: %s\n' % sum_cl)
+            if pod_flag:
+                of.write('summary: %s\n' % sum_cl)
+            so['summary'] = sum_cl
 
             text1 = clean_text(item['text'])
             try:
-                of.write('text1:   %s\n' % text1)
+                if pod_flag:
+                    of.write('text1:   %s\n' % text1)
+                so['text1'] = text1
             except:
                 try:
-                    of.write('text1:  %s\n' % text1.encode('latin-1', 'replace'))
+                    if pod_flag:
+                        of.write('text1:  %s\n' % text1.encode('latin-1', 'replace'))
+                    so['text1'] = text1.encode('latin-1', 'replace')
                 except:
-                    of.write('#ERROR: can\'t print text1...\n')
+                    if pod_flag:
+                        of.write('#ERROR: can\'t print text1...\n')
                     hstr = hexdump(text1)
-                    print('%s\n' % hstr)
+                    if pod_flag:
+                        of.write('%s\n' % hstr)
+                    so['text1'] = hstr
 
             # of.write('...\n')
-            of.write('end-item:\n')
+            if pod_flag:
+                of.write('end-item:\n')
+
+            #
+            # generate timestamp in the form "2017-10-02T14:00:39.641Z"
+            #
+            # Todo: find a cleaner way to find seconds with milliseconds --
+            #   try datetime
+            #
+            tnow = time.time()
+            tn = time.gmtime(tnow)
+            t_part1 = strftime("%Y-%m-%dT%H:%M:%S", gmtime())
+            msecs_part = str("%0.3f" % (float(tnow) - float(int(tnow))))[2:]
+            t_whole = t_part1 + "." + msecs_part + "Z"
+            so['date_indexed'] = t_whole
+
+            #
+            # generate a UUID for cnrp_id
+            #
+            so['cnrp_id'] = str(uuid.uuid4())
+
+            #
+            # convert so python object to JSON and write to file
+            #
+            jo = None
+            try:
+                jo = json.dumps(so, sort_keys=True, indent=2)  ## error here - Thu Sep  6 13:39:24 PDT 2018
+            except:
+                try:
+                    jo = json.dumps(so, sort_keys=True, indent=2, encoding='latin1')
+                except:
+                    try:
+                        jo = json.dumps(so, sort_keys=True, indent=2, ensure_ascii=False)
+                    except:
+                        of.write("#JSON conversion failed\n")
+            if jo is not None:
+                of.write(jo)
             of.write('\n')
+
+            #
+            # send JSON to Kafka
+            #
+
+
             # end of def proc_rss_file()
 
     return
