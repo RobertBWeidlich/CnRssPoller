@@ -132,6 +132,7 @@ def main(hostname):
 def proc_rss_file(path_arg, ofp_arg, tmp_dir):
     #pod_flag = True
     pod_flag = False
+    pod_flag2 = False
     of = ofp_arg
     fn_patt_str = '.*cn_rss_raw-(.*)-(\d{8}\.\d{4}\.\d{2})\.xml$'
     fn_patt_obj = re.compile(fn_patt_str)
@@ -168,7 +169,7 @@ def proc_rss_file(path_arg, ofp_arg, tmp_dir):
         # if False:
         if len(uid) < 1:
             # todo: look for better alternatives for guid?? - rbw, 20121009.1943
-            if false:
+            if pod_flag2:
                 if len(uid) < 1:
                     uid = item['url']
                     print ''
