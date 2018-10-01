@@ -25,6 +25,10 @@ import uuid
 from time import gmtime
 from time import strftime
 from cn_rss_doc import CnRssDocument
+from cn_hpe_json_kafka_producer import CnHpeJsonKafkaProducer
+
+KAFKA_URLS = ["localhost:9092"]
+KAFKA_TOPIC = "cnrp-nrt-feed"
 
 
 def main(hostname):
@@ -97,6 +101,9 @@ def main(hostname):
 
     f = open(POSTPROC_OUT_PIPE, 'r')
 
+    # open connection to Kafka
+    kp = CnHpeJsonKafkaProducer(KAFKA_URLS, KAFKA_TOPIC)
+
     o_path = set_output_path_proc(BASE_DIR_PROC)
     print('# opening \'%s\'' % o_path);
     ofp = open(o_path, 'a')
@@ -125,11 +132,11 @@ def main(hostname):
             ofp = open(o_path, 'a')
             ofp_name = o_path
 
-        proc_rss_file(line, ofp, ENV_CN_TMP)
+        proc_rss_file(line, ofp, ENV_CN_TMP, kp)
         ofp.flush()
 
 
-def proc_rss_file(path_arg, ofp_arg, tmp_dir):
+def proc_rss_file(path_arg, ofp_arg, tmp_dir, kafka_prod):
     #pod_flag = True
     pod_flag = False
     pod_flag2 = False
@@ -297,6 +304,8 @@ def proc_rss_file(path_arg, ofp_arg, tmp_dir):
                         of.write("#JSON conversion failed\n")
             if jo is not None:
                 of.write(jo)
+                # write to kafka
+                kafka_prod.send_json_to_kafka(jo)
             of.write('\n')
 
             #

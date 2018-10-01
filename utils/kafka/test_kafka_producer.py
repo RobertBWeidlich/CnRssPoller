@@ -10,7 +10,8 @@ from kafka import KafkaProducer
 from kafka.errors import KafkaError
 
 kafka_servers = ['localhost:9092']
-kafka_topic = 'rbw-test-20180804-1105'
+#kafka_topic = 'rbw-test-20180804-1105'
+kafka_topic = 'test'
 kafka_msg = b'This is a test message - 1107'
 
 prod = KafkaProducer(bootstrap_servers=kafka_servers)

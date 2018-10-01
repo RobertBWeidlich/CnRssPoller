@@ -9,14 +9,15 @@
 import sys, os
 from kafka import KafkaProducer
 
+
 class CnHpeJsonKafkaProducer():
+
     def __init__(self, kafka_broker_url, kafka_topic):
         self.kafka_broker_url = kafka_broker_url
         self.kafka_topic = kafka_topic
         print "CnHpeJsonKafkaProducer() ctor"
         # assert isinstance(self.kafka_broker_url, object)
         self.kafka_producer = KafkaProducer(bootstrap_servers=self.kafka_broker_url)
-        # self.kafka_producer = KafkaProducer()
 
     def say_hello(self):
         print "Hello from CnHpeJsonKafkaProducer()"

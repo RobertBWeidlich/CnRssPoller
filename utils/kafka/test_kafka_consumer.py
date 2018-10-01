@@ -17,7 +17,9 @@ from kafka import KafkaConsumer
 from kafka.errors import KafkaError
 
 kafka_servers = ['localhost:9092']
-kafka_topic = 'rbw-test-20180804-1105'
+##kafka_topic = 'rbw-test-20180804-1105'
+#kafka_topic = 'test'
+kafka_topic = 'cnrp-nrt-feed'
 
 consumer = KafkaConsumer(kafka_topic)
 
