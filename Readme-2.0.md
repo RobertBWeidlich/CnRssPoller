@@ -3,13 +3,23 @@ author:  rbw
 date:    Mon Oct  1 13:41:59 PDT 2018
 purpose: Addition of Kafka to CnRssPoller
 
-Rough notes...
+Version 2.0 Polls a number of RSS Feeds, and sends the de-duped text to
+a Kafka topic.
 
-0. Download and install Kafka
+Follow these instructions to install and run.  This deployment consists
+of multiple Linux windows:
 
-1. Download and install Zookeeper, if necessary
+1. Download and install Zookeeper, then start it, if necessary
 
-2. Edit Kafka config file
+    [Window-1] - monitor Kafka and Solr parameters maintained by Zookeeper
+      ./zookeeper-client
+        ls /solr
+        ls /kafka
+        ...
+
+2. Download and install Kafka, if necessary
+
+   Edit Kafka config file
 
     vi ./config/server.properties
     set "zookeeper.connect":
@@ -18,6 +28,8 @@ Rough notes...
 
 3. Start Kafka:
 
+    [Window-2]
+    cd {KAFKA_INSTALL_DIR}
     nohup ./bin/kafka-server-start.sh ./config/server.properties > kafka.out &
 
 4. Create Kafka topic:
@@ -37,6 +49,7 @@ Rough notes...
 
 5. Start a Kafka Consumer
 
+    [Window-3]
     /usr/local/kafka_2.11-0.11.0.0/bin/kafka-console-consumer.sh \
       --bootstrap-server localhost:9092                          \
       --topic cnrp-nrt-feed                                      \
