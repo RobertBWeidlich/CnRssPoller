@@ -1,7 +1,11 @@
-file:    cn_http_poller/py/Readme.py
+file:    Readme-1.0.py
 author:  rbw
-date:    Sat Mar 31 14:26:40 PDT 2018
+date:    Sun Oct  7 11:26:32 PDT 2018
 purpose: How to bootstrap CN RSS polling and processing tools
+note:    This applies to Version 1.0
+
+This documents version 1.0 of the CnRssPoller, which is currently
+deprecated.
 
 To run CN RSS Poller:
 

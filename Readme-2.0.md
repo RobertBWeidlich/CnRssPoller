@@ -1,18 +1,22 @@
-file:    Readme-kafka.md
+file:    Readme-2.0.md
 author:  rbw
-date:    Mon Oct  1 13:41:59 PDT 2018
+date:    Sun Oct  7 11:26:32 PDT 2018
 purpose: Addition of Kafka to CnRssPoller
 
-Version 2.0 Polls a number of RSS Feeds, and sends the de-duped text to
+Version 2.0 polls a number of RSS Feeds, and sends the de-duped text to
 a Kafka topic.
 
 Follow these instructions to install and run.  This deployment consists
-of multiple Linux windows:
+of multiple Linux windows, designated below as [Window-X]:
+
+Also see the Readme-1.0.md file to set up the correct environmental
+variables. [Todo: consolidate the Readme files to make this file
+standalone]
 
 1. Download and install Zookeeper, then start it, if necessary
 
     [Window-1] - monitor Kafka and Solr parameters maintained by Zookeeper
-      ./zookeeper-client
+      zookeeper-client
         ls /solr
         ls /kafka
         ...
@@ -32,7 +36,7 @@ of multiple Linux windows:
     cd {KAFKA_INSTALL_DIR}
     nohup ./bin/kafka-server-start.sh ./config/server.properties > kafka.out &
 
-4. Create Kafka topic:
+4. Create Kafka topic if necessary:
 
    First check existing topics:
 
@@ -57,15 +61,20 @@ of multiple Linux windows:
 
       AND/OR
 
+    [Window-4]
     {CN_RSS_POLLER_HOME}/utils/kafka/test_kafka_consumer.py
 
     NOTE: you can run multiple consumers for the same Kafka topic.
 
 ...  copy from other Readme's in this project...
 
+6. Start the two CN RSS processes.  
 
+    [Window-5] 
+      cd $CN_HOME
+      ./cn_hpe.py ../config/cn_hpe.cfg
 
-
-
-
+    [Window-6] 
+      cd $CN_HOME
+      ./cn_rss_proc_json_kafka.py
 
