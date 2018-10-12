@@ -1,6 +1,14 @@
 #Todo-2.0-20181007.md
+
 1. Pass-thru processor
-2. Clean text processor
-3. Solr ingest processor
-4. TDIDF processor
-5. Proper Name
+
+2. Processor to dump data in plain text (get rid of JSON escaped characters)
+
+3. Clean text processor
+
+4. Solr ingest processor
+
+5. TDIDF processor
+
+6. Proper Name processor
+
