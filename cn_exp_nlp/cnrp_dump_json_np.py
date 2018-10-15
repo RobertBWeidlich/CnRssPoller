@@ -3,8 +3,8 @@
 ########################################################################
 # file:    cnrp_dump_json_np.py
 # author:  rbw
-# date:    Fri Oct 12 18:09:04 PDT 2018
-# purpose: NiFi processor to convert JSON textual data to textual data
+# date:    Sun Oct 14 19:16:28 PDT 2018
+# purpose: NiFi processor to convert JSON data to textual data
 #          to aid in cleaning out HTML artifacts from text.
 ########################################################################
 import os
@@ -18,7 +18,7 @@ def cnrp_dump_json_np(json_data):
     print "<<<"
 
     # convert JSON to python object
-    jo = json.loads(json_data)
+    jo = json.loads(json_data, encoding="utf8")
     #print "%s" % str(jo)
     #print "type: %s" % (str(type(jo)))
     jo_keys = jo.keys()
@@ -27,14 +27,19 @@ def cnrp_dump_json_np(json_data):
     for jo_key in jo_keys:
         print "%s:" % jo_key
         print ">>>"
-        print jo[jo_key]
+        try:
+            print str(jo[jo_key])
+        except Exception as e:
+            print "ERROR printing string: "
+            print e
         print "<<<"
 
 if __name__ == '__main__':
     #
     # usage: ./cnrp_dump_json_np [file.json]
     #
-    TEST_HC_FILE = True
+    #TEST_HC_FILE = True
+    TEST_HC_FILE = False
 
     argc = len(sys.argv)
     #print "argc:     %d" % argc
@@ -75,17 +80,5 @@ if __name__ == '__main__':
 
     cnrp_dump_json_np(in_buf)
 
-
-
-
-
-
-
-
-
     sys.exit(0)
-
-
-
-
 
