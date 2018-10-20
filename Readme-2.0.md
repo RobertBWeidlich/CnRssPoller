@@ -1,6 +1,6 @@
 file:    Readme-2.0.md
 author:  rbw
-date:    Fri Oct 19 17:38:30 EDT 2018
+date:    Fri Oct 19 18:03:11 PDT 2018
 purpose: Addition of Kafka to CnRssPoller
 
 Version 2.0 polls a number of RSS Feeds, and sends the de-duped text to
@@ -47,7 +47,8 @@ standalone]
     [Window-3]
     cd {KAFKA_INSTALL_DIR}
     rm -rf /tmp/kafka-logs
-    nohup ./bin/kafka-server-start.sh ./config/server.properties > kafka.out &
+    #nohup ./bin/kafka-server-start.sh ./config/server.properties > kafka.out &
+    ./bin/kafka-server-start.sh ./config/server.properties &
 
 4. Create Kafka topic if necessary:
 
@@ -68,7 +69,7 @@ standalone]
 5. Start a Kafka Consumer
 
     [Window-5]
-    /usr/local/kafka_2.11-0.11.0.0/bin/kafka-console-consumer.sh \
+    /usr/local/kafka_2.11-2.0.0/bin/kafka-console-consumer.sh \
       --bootstrap-server localhost:9092                          \
       --topic cnrp-nrt-feed                                      \
       --from-beginning
@@ -85,12 +86,44 @@ standalone]
 6. Start the two CN RSS processes.  
 
     [Window-7] 
-      su - cn
+      #su - cn
       cd $CN_HOME
       ./cn_hpe.py ../config/cn_hpe.cfg
 
     [Window-8] 
-      su - cn
+      #su - cn
       cd $CN_HOME
       ./cn_rss_proc_json_kafka.py
+
+7. Monitor data
+
+    [Window-9] 
+      cd $CN_DATA
+      ls -l ...
+
+8. NiFi
+
+    [Window-10] 
+      cd /usr/local/nifi-1.7.1/
+      ./bin/nifi.sh start
+
+[wait 3-5 minutes to allow NiFi to start up before proceeding to next step...]
+
+9. Monitor Nifi in Web Browser
+
+    [Web Browser]
+    http://localhost:8080/nifi
+
+10. Monitor NiFi processors
+
+    [Window-11] 
+      cd /tmp
+      ls -l
+
+    Data can be found in /tmp/nf_* subdirectories
+
+  
+     
+
+
 
