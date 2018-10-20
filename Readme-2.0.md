@@ -1,6 +1,6 @@
 file:    Readme-2.0.md
 author:  rbw
-date:    Sun Oct  7 11:26:32 PDT 2018
+date:    Fri Oct 19 17:38:30 EDT 2018
 purpose: Addition of Kafka to CnRssPoller
 
 Version 2.0 polls a number of RSS Feeds, and sends the de-duped text to
@@ -13,10 +13,21 @@ Also see the Readme-1.0.md file to set up the correct environmental
 variables. [Todo: consolidate the Readme files to make this file
 standalone]
 
-1. Download and install Zookeeper, then start it, if necessary
+1. Download and install Zookeeper, then start it if necessary.
 
-    [Window-1] - monitor Kafka and Solr parameters maintained by Zookeeper
-      zookeeper-client
+   It's also possible to use Kafka's built-in Zookeeper server if
+   zookeeper is not already installed.  These are the steps to run
+   the built-in Zookeeper server:
+
+    [Window-1]
+      rm -rf /tmp/zookeeper
+      cd /usr/local/kafka_2.11-2.0.0
+      vi ./config/zookeeper.properties
+      nohup ./bin/zookeeper-server-start.sh ./config/zookeeper.properties \
+        > zk.out &
+
+    [Window-2] - to monitor Kafka and Solr parameters maintained by Zookeeper
+      zookeeper-client (for conventional zookeeper)
         ls /solr
         ls /kafka
         ...
@@ -25,6 +36,7 @@ standalone]
 
    Edit Kafka config file
 
+    [Window-3]
     vi ./config/server.properties
     set "zookeeper.connect":
 
@@ -32,14 +44,16 @@ standalone]
 
 3. Start Kafka:
 
-    [Window-2]
+    [Window-3]
     cd {KAFKA_INSTALL_DIR}
+    rm -rf /tmp/kafka-logs
     nohup ./bin/kafka-server-start.sh ./config/server.properties > kafka.out &
 
 4. Create Kafka topic if necessary:
 
    First check existing topics:
 
+    [Window-4]
      ./bin/kafka-topics.sh --list --zookeeper localhost:2181/kafka
 
    Now create new topic for CnRssPoller
@@ -53,7 +67,7 @@ standalone]
 
 5. Start a Kafka Consumer
 
-    [Window-3]
+    [Window-5]
     /usr/local/kafka_2.11-0.11.0.0/bin/kafka-console-consumer.sh \
       --bootstrap-server localhost:9092                          \
       --topic cnrp-nrt-feed                                      \
@@ -61,7 +75,7 @@ standalone]
 
       AND/OR
 
-    [Window-4]
+    [Window-6]
     {CN_RSS_POLLER_HOME}/utils/kafka/test_kafka_consumer.py
 
     NOTE: you can run multiple consumers for the same Kafka topic.
@@ -70,11 +84,13 @@ standalone]
 
 6. Start the two CN RSS processes.  
 
-    [Window-5] 
+    [Window-7] 
+      su - cn
       cd $CN_HOME
       ./cn_hpe.py ../config/cn_hpe.cfg
 
-    [Window-6] 
+    [Window-8] 
+      su - cn
       cd $CN_HOME
       ./cn_rss_proc_json_kafka.py
 
