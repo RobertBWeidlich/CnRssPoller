@@ -28,7 +28,8 @@ def cnrp_dump_json_np(json_data):
         print "%s:" % jo_key
         print ">>>"
         try:
-            print str(jo[jo_key])
+            #print str(jo[jo_key])
+            print repr(jo[jo_key])
         except Exception as e:
             print "ERROR printing string: "
             print e
