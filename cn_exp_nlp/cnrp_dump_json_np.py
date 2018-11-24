@@ -25,14 +25,28 @@ def cnrp_dump_json_np(json_data):
     jo_keys.sort()
     #print jo_keys
     for jo_key in jo_keys:
-        print "%s:" % jo_key
+        print "jo_key: \"%s\":" % jo_key
         print ">>>"
         try:
-            #print str(jo[jo_key])
-            print repr(jo[jo_key])
+            print "[1]: jo[jo_key]"
+            print jo[jo_key]
         except Exception as e:
-            print "ERROR printing string: "
+            print "ERROR"
             print e
+            print "Trying 2nd time:"
+            try:
+                print "[2] str(jo[jo[jo_key])"
+                print str(jo[jo_key])
+            except Exception as e:
+                print "ERROR:"
+                print e
+                print "Trying 3rd time - :"
+                try:
+                    print "[3] repr(jo[jo[jo_key])"
+                    print repr(jo[jo_key])
+                except Exception as e:
+                    print "ERROR:"
+                    print e
         print "<<<"
 
 if __name__ == '__main__':
