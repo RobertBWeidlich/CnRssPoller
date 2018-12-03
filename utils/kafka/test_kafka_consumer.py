@@ -16,10 +16,12 @@ import uuid
 from kafka import KafkaConsumer
 from kafka.errors import KafkaError
 
-kafka_servers = ['localhost:9092']
-##kafka_topic = 'cnrp-nrt-feed'
-#kafka_topic = 'test-20181101'
-kafka_topic = 'test'
+#kafka_servers = ['localhost:9092']
+kafka_servers = ['192.168.1.204:9092']
+###kafka_topic = 'cnrp-nrt-feed'
+##kafka_topic = 'test-20181101'
+#kafka_topic = 'test'
+kafka_topic = 'cnrp-nrt-feed'
 
 consumer = KafkaConsumer(kafka_topic, bootstrap_servers=kafka_servers)
 print "starting Kafka consumer"
