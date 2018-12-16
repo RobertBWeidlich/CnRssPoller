@@ -27,7 +27,8 @@ from time import strftime
 from cn_rss_doc import CnRssDocument
 from cn_hpe_json_kafka_producer import CnHpeJsonKafkaProducer
 
-KAFKA_URLS = ["localhost:9092"]
+#KAFKA_URLS = ["localhost:9092"]
+KAFKA_URLS = "localhost:9092"
 KAFKA_TOPIC = "cnrp-nrt-feed"
 
 

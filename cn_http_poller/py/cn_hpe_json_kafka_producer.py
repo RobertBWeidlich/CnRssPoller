@@ -16,6 +16,8 @@ class CnHpeJsonKafkaProducer():
         self.kafka_broker_url = kafka_broker_url
         self.kafka_topic = kafka_topic
         print "CnHpeJsonKafkaProducer() ctor"
+	print "kafka_broker_url: %s" % kafka_broker_url
+	print "kafka_topic : %s" % kafka_topic
         # assert isinstance(self.kafka_broker_url, object)
         self.kafka_producer = KafkaProducer(bootstrap_servers=self.kafka_broker_url)
 
