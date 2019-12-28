@@ -1,4 +1,4 @@
-#Todo-2.0-20181007.md
+#Todo-2.0-20191228.md
 
 1. Pass-thru processor
 
@@ -12,3 +12,4 @@
 
 6. Proper Name processor
 
+7. Python logging
