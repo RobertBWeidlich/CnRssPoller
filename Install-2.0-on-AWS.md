@@ -155,6 +155,11 @@ be sufficient to run CnRssPoller, and how to install and run it.
   $ mkdir ~/Projects
   $ cd ~/Projects
   $ git clone git@github.com:RobertBWeidlich/CnRssPoller.git
+  $ git branch -r   # list all branches available at remote git repo
+  $ git checkout origin/2.0-current-dev-20181007
+  $ git pull
+
+
 
 Tue Dec 31 18:26:25 UTC 2019
 
