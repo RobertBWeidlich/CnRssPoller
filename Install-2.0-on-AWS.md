@@ -162,8 +162,6 @@ Tue Dec 31 18:26:25 UTC 2019
 
 
 
-
-
 General Comments, to reduce AWS costs
 =====================================
   - Make sure all EC2s turned off when not in use
