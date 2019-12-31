@@ -167,7 +167,7 @@ be sufficient to run CnRssPoller, and how to install and run it.
     $ export CN_PIPE=/tmp/p_cn_hpe_out
     $ export CN_TMP=/tmp
     $ export CN_WAIT_OFFSET=17.923
-    $ export PYTHON_PATH=/home/cn/Projects/CnRssPoller/cn_xml_doc/py:$PYTHONPATH
+    $ export PYTHONPATH=/home/cn/Projects/CnRssPoller/cn_xml_doc/py:$PYTHONPATH
 
   Log out of the "cn" account, then log back in.
 
