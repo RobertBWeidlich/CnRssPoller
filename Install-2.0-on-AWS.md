@@ -1,7 +1,7 @@
 file: Install-2.0-on-AWS.md
 
 This documents how to create a new AWS Linux EC2 (virtual machine) that should
-be sufficient to run CnRssPoller.
+be sufficient to run CnRssPoller, and how to install and run it.
 
 1. Log into AWS Console
 =======================
@@ -109,6 +109,7 @@ be sufficient to run CnRssPoller.
 ====================
   In a Linux shell window:
     $ ssh -i ~/.aws/keypairs/kp.pem ec2-user@54.37.230.37
+    $ sudo yum install git
 
     (use full path of your keypair and the EIP allocated and associate
      in the steps above)
@@ -122,8 +123,7 @@ be sufficient to run CnRssPoller.
     $ sudo adduser cn
     $ sudo passwd cn
       (set password for the "cn" account)
-    $ sudo usermod -aG sudo cn
-    $ usermod -aG wheel cn
+    $ sudo usermod -aG wheel cn
 
   edit the /etc/sudoers file accordingly:
 
@@ -148,20 +148,15 @@ be sufficient to run CnRssPoller.
     https://github.com/settings/keys
     https://help.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
 
+8. Clone CnRssPoller git repo
+=============================
 
-  
+  $ sudo su - cn
+  $ mkdir ~/Projects
+  $ cd ~/Projects
+  $ git clone git@github.com:RobertBWeidlich/CnRssPoller.git
 
-
-
-
-
-
-
-
-
-
-  
-
+Tue Dec 31 18:26:25 UTC 2019
 
 
 
