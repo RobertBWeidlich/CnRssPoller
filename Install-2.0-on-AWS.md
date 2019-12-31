@@ -1,4 +1,5 @@
 file: Install-2.0-on-AWS.md
+date: Tue Dec 31 23:42:31 UTC 2019
 
 This documents how to create a new AWS Linux EC2 (virtual machine) that should
 be sufficient to run CnRssPoller, and how to install and run it.
