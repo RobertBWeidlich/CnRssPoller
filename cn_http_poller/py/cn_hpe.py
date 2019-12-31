@@ -118,16 +118,20 @@ def main(cfg_file_arg, hostname):
   # open pipe to post-processing application
   # 
   print 'opening Unix pipe \"%s\"' % POSTPROC_OUT_PIPE
+  sys.stdout.flush()
   p_file = open(POSTPROC_OUT_PIPE, 'w')
   p_file.write('#cn_hpe.py starting up\n')
+  sys.stdout.flush()
   p_file.flush()
   time.sleep(1)
   p_file.close()
   time.sleep(1)
   p_file = open(POSTPROC_OUT_PIPE, 'w')
   p_file.write('#cn_hpe.py starting up\n')
+  sys.stdout.flush()
   p_file.flush()
   print 'hostname: %s' % hostname
+  sys.stdout.flush()
 
   # loop - iterate every 60 seconds
   logmutex = threading.Lock()
@@ -144,8 +148,9 @@ def main(cfg_file_arg, hostname):
     t_str2 = hms[4]
 
     wait_time = (60.0 - sec) + WAIT_OFFSET
-    #print 'waiting for %f seconds' % wait_time
+    print 'waiting for %f seconds' % wait_time
 
+    sys.stdout.flush()
     time.sleep(wait_time)
     #print 'finished sleeping'
    

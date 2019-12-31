@@ -284,7 +284,7 @@ def proc_rss_file(path_arg, ofp_arg, tmp_dir):
             t_part1 = strftime("%Y-%m-%dT%H:%M:%S", gmtime())
             msecs_part = str("%0.3f" % (float(tnow) - float(int(tnow))))[2:]
             t_whole = t_part1 + "." + msecs_part + "Z"
-            so['date_indexed'] = t_whole
+            so['date_ingested'] = t_whole
 
             #
             # generate a UUID for cnrp_id

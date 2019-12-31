@@ -150,7 +150,6 @@ be sufficient to run CnRssPoller, and how to install and run it.
 
 8. Clone CnRssPoller git repo
 =============================
-
   $ sudo su - cn
   $ mkdir ~/Projects
   $ cd ~/Projects
@@ -159,17 +158,52 @@ be sufficient to run CnRssPoller, and how to install and run it.
   $ git checkout origin/2.0-current-dev-20181007
   $ git pull
 
+9. Set Environmental Variables
+==============================
+  Add the following to the ~cn/.bashrc file:
+
+    $ export CN_HOME=/home/cn/Projects/CnRssPoller/cn_http_poller/py
+    $ export CN_DATA=/data/cn
+    $ export CN_PIPE=/tmp/p_cn_hpe_out
+    $ export CN_TMP=/tmp
+    $ export CN_WAIT_OFFSET=17.923
+    $ export PYTHON_PATH=/home/cn/Projects/CnRssPoller/cn_xml_doc/py:$PYTHONPATH
+
+  Log out of the "cn" account, then log back in.
+
+  Then run:
+
+    $ sudo mkdir -p $CN_DATA
+    $ sudo chmod a+w /data
+    $ sudo chown -R cn:cn $CN_DATA
+
+10. Start the CnRssPoller Processes
+===================================
+CnRssPoller consists of two separate Python processes:
+
+  1. cn_hpe.py
+  2. cn_rss_proc_json.py
+
+The first process communicates to the second via a Unix pipe whose name is
+defined by $CN_PIPE.
+
+To start CnRss Poller, run the following in separate Linux windows:
+
+  10.1. Start cn_hpe.py
+  =====================
+  In a Linux command shell run:
+    $ cd $CN_HOME
+    $ nohup ./cn_hpe.py ../config/cn_hpe.cfg > cn_hpe.out &
 
 
-Tue Dec 31 18:26:25 UTC 2019
-
-
-
-
+  10.2. Start cn_rss_proc_json.py
+  ===============================
+  In a Linux command shell run:
+    $ cd $CN_HOME
+    $ nohup ./cn_rss_proc_json.py > cn_rss_proc_json.out &
 
 General Comments, to reduce AWS costs
 =====================================
   - Make sure all EC2s turned off when not in use
   - Delete all unused EIPs
-
 
