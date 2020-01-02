@@ -1,5 +1,5 @@
 file: Install-2.0-on-AWS.md
-date: Tue Dec 31 23:42:31 UTC 2019
+date: Thu Jan  2 01:40:34 UTC 2020
 
 This documents how to create a new AWS Linux EC2 (virtual machine) that should
 be sufficient to run CnRssPoller, and how to install and run it.
@@ -110,12 +110,12 @@ be sufficient to run CnRssPoller, and how to install and run it.
 ====================
   In a Linux shell window:
     $ ssh -i ~/.aws/keypairs/kp.pem ec2-user@54.37.230.37
-    $ sudo yum install git
 
-    (use full path of your keypair and the EIP allocated and associate
-     in the steps above)
+      (use full path of your keypair and the EIP allocated and associate
+       in the steps above)
 
     $ sudo yum update
+    $ sudo yum install git
 
 6. Create account "cn" for CnRssPoller
 ======================================
@@ -156,7 +156,7 @@ be sufficient to run CnRssPoller, and how to install and run it.
   $ cd ~/Projects
   $ git clone git@github.com:RobertBWeidlich/CnRssPoller.git
   $ git branch -r   # list all branches available at remote git repo
-  $ git checkout origin/2.0-current-dev-20181007
+  $ git checkout 2.0-current-dev-20181007
   $ git pull
 
 9. Set Environmental Variables
@@ -195,16 +195,17 @@ To start CnRss Poller, run the following in separate Linux windows:
   In a Linux command shell run:
     $ cd $CN_HOME
     $ nohup ./cn_hpe.py ../config/cn_hpe.cfg > cn_hpe.out &
-
+    $ tail -n 5000 -f ./cn_hpe.out
 
   10.2. Start cn_rss_proc_json.py
   ===============================
   In a Linux command shell run:
     $ cd $CN_HOME
     $ nohup ./cn_rss_proc_json.py > cn_rss_proc_json.out &
+    $ tail -n 5000 -f ./cn_rss_proc_json.out
 
 General Comments, to reduce AWS costs
 =====================================
   - Make sure all EC2s turned off when not in use
-  - Delete all unused EIPs
+  - Delete all unused (unassociated) EIPs
 
