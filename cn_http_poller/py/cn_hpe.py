@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cn_hpe.py (HTTP Poll Engine)
 # author:  rbw
-# date:    Sat Mar  2 19:48:20 UTC 2013
+# date:    Sat Feb 22 01:01:02 UTC 2020
 # purpose: periodically poll list of HTTP sites for HTML, RSS, and Atom
 #          data
 # dependencies:
@@ -168,7 +168,7 @@ def main(cfg_file_arg, hostname):
 
     hms = get_current_utc_hms()
     poll_min = hms[1]
-    print 'poll_min: %d' % poll_min
+    #print 'poll_min: %d' % poll_min
 
     sitename_list = cfg_data.get_namelist_by_min(poll_min)
     print 'polling sites:'

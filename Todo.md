@@ -17,4 +17,7 @@ Date:   Wed Sep  6 18:46:13 PDT 2017
 * Fix HTTP polling errors
 * Clean up Readme files such that it's reasonably maintainable and
   installable.
-  
+* Write to log files, use Python logging
+* Analyze results
+* add more sources
+* add version

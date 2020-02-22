@@ -39,7 +39,7 @@ class CnHpThr(threading.Thread):  # subclass of threading.Thread
     #
     # 1. poll site
     #
-    if True:
+    if False:
       print '777'
       print 'self.url:              %s' % self.url
       print 'self.out_filename_raw: %s' % self.out_filename_raw
