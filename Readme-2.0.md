@@ -1,7 +1,10 @@
 file:    Readme-2.0.md
 author:  rbw
-date:    Fri Oct 19 18:03:11 PDT 2018
+date:    Sat, Feb 13, 2021  6:29:41 PM
 purpose: Addition of Kafka to CnRssPoller
+
+Note: as of Feb 13, 2021, all new development of this branch switched
+to version 3.0.
 
 Version 2.0 polls a number of RSS Feeds, and sends the de-duped text to
 a Kafka topic.
