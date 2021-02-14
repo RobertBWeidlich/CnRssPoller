@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ########################################################################
 # file:    cn_ftp_proc.py
@@ -23,46 +23,46 @@ def main():
     # objects
     #
     if not os.environ.has_key('CN_HOME'):
-        print 'ERROR: environmental variable \'CN_HOME\' not defined'
+        print('ERROR: environmental variable \'CN_HOME\' not defined')
         sys.exit(1)
     ENV_CN_HOME = os.environ['CN_HOME']
     if not os.path.exists(ENV_CN_HOME):
-        print 'ERROR: directory \"' + ENV_CN_HOME + '\" ' + \
+        print('ERROR: directory \"' + ENV_CN_HOME + '\" ' + \
               'defined by environmental ' + \
-              'variable \'CN_HOME\'' + ' does not exist'
+              'variable \'CN_HOME\'' + ' does not exist')
         sys.exit(1)
 
     if not os.environ.has_key('CN_DATA'):
-        print 'ERROR: environmental variable \'CN_DATA\' not defined'
+        print('ERROR: environmental variable \'CN_DATA\' not defined')
         sys.exit(1)
     ENV_CN_DATA = os.environ['CN_DATA']
     if not os.path.exists(ENV_CN_DATA):
-        print 'ERROR: directory \"' + ENV_CN_DATA + '\" ' + \
+        print('ERROR: directory \"' + ENV_CN_DATA + '\" ' + \
               ' defined by environmental ' + \
-              'variable \'CN_DATA\'' + ' does not exist'
+              'variable \'CN_DATA\'' + ' does not exist')
         sys.exit(1)
 
     if not os.environ.has_key('CN_PIPE'):
-        print 'ERROR: environmental variable \'CN_PIPE\' not defined'
+        print('ERROR: environmental variable \'CN_PIPE\' not defined')
         sys.exit(1)
     ENV_CN_PIPE = os.environ['CN_PIPE']
     if not os.path.exists(ENV_CN_PIPE):
         os.mkfifo(ENV_CN_PIPE)
-        print 'creating pipe file \"' + ENV_CN_PIPE + '\"'
+        print('creating pipe file \"' + ENV_CN_PIPE + '\"')
         # sys.exit(1)
 
     if not os.environ.has_key('CN_TMP'):
-        print 'ERROR: environmental variable \'CN_TMP\' not defined'
+        print('ERROR: environmental variable \'CN_TMP\' not defined')
         sys.exit(1)
     ENV_CN_TMP = os.environ['CN_TMP']
     if not os.path.exists(ENV_CN_TMP):
-        print 'ERROR: tmp file \"' + ENV_CN_TMP + '\" ' + \
+        print('ERROR: tmp file \"' + ENV_CN_TMP + '\" ' + \
               ' defined by environmental ' + \
-              'variable \'CN_TMP\'' + ' does not exist'
+              'variable \'CN_TMP\'' + ' does not exist')
         sys.exit(1)
 
     if not os.environ.has_key('CN_WAIT_OFFSET'):
-        print 'ERROR: environmental variable \'CN_WAIT_OFFSET\' not defined'
+        print('ERROR: environmental variable \'CN_WAIT_OFFSET\' not defined')
         sys.exit(1)
     ENV_CN_WAIT_OFFSET = os.environ['CN_WAIT_OFFSET']
 
@@ -77,27 +77,27 @@ def main():
     if not BASE_DIR_RAW.endswith(os.sep):
         BASE_DIR_RAW += os.sep
     BASE_DIR_RAW += 'rss_raw'
-    print 'BASE_DIR_RAW:       ' + BASE_DIR_RAW
+    print('BASE_DIR_RAW:       ' + BASE_DIR_RAW)
     if not os.path.exists(BASE_DIR_RAW):
-        print 'creating \"' + BASE_DIR_RAW + '\"'
+        print('creating \"' + BASE_DIR_RAW + '\"')
         os.mkdir(BASE_DIR_RAW)
 
     BASE_DIR_PROC = ENV_CN_DATA
     if not BASE_DIR_PROC.endswith(os.sep):
         BASE_DIR_PROC += os.sep
     BASE_DIR_PROC += 'rss_proc'
-    print 'BASE_DIR_PROC:      ' + BASE_DIR_PROC
+    print('BASE_DIR_PROC:      ' + BASE_DIR_PROC)
     if not os.path.exists(BASE_DIR_PROC):
-        print 'creating \"' + BASE_DIR_PROC + '\"'
+        print('creating \"' + BASE_DIR_PROC + '\"')
         os.mkdir(BASE_DIR_PROC)
 
     BASE_DIR_CURRENT = ENV_CN_DATA
     if not BASE_DIR_CURRENT.endswith(os.sep):
         BASE_DIR_CURRENT += os.sep
     BASE_DIR_CURRENT += 'rss_current'
-    print 'BASE_DIR_CURRENT:   ' + BASE_DIR_CURRENT
+    print('BASE_DIR_CURRENT:   ' + BASE_DIR_CURRENT)
     if not os.path.exists(BASE_DIR_CURRENT):
-        print 'creating \"' + BASE_DIR_CURRENT + '\"'
+        print('creating \"' + BASE_DIR_CURRENT + '\"')
         os.mkdir(BASE_DIR_CURRENT)
 
     #
@@ -126,12 +126,12 @@ def main():
         #
         new_flag = False;
         data_new = []
-        # print 'last time: %s' % last_item_ts_last_time
-        # print 'this time: %s' % last_item_ts_this_time
+        # print('last time: %s' % last_item_ts_last_time)
+        # print('this time: %s' % last_item_ts_this_time)
         if len(last_item_ts_last_time) > 0:
             for d in data:
                 if new_flag == False:
-                    # print '  %s > %s??' % (d['tstamp'], last_item_ts_last_time)
+                    # print('  %s > %s??' % (d['tstamp'], last_item_ts_last_time))
                     if d['tstamp'] > last_item_ts_last_time:
                         new_flag = True
                     else:
@@ -143,25 +143,25 @@ def main():
         #
         # for d in data:
         for d in data_new:
-            # print d
-            print ''
-            print 'src:      %s' % d['src']
-            print 'url:      %s' % d['url']
-            print 'tstamp:   %s' % d['tstamp']
-            print 'path:     %s' % d['path']
-            print 'pubdate:  %s' % d['pubdate']
-            print 'author:   %s' % d['author']
-            print 'summary:  %s' % d['summary']
-            print 'guid:     %s' % d['guid']
-            print 'title:    %s' % d['title']
-            print 'text1:    %s' % d['text1']
-            print ''
-            print ''
-        print 'last_item_ts: %s' % last_item_ts
-        print ''
+            # print(d)
+            print('')
+            print('src:      %s' % d['src'])
+            print('url:      %s' % d['url'])
+            print('tstamp:   %s' % d['tstamp'])
+            print('path:     %s' % d['path'])
+            print('pubdate:  %s' % d['pubdate'])
+            print('author:   %s' % d['author'])
+            print('summary:  %s' % d['summary'])
+            print('guid:     %s' % d['guid'])
+            print('title:    %s' % d['title'])
+            print('text1:    %s' % d['text1'])
+            print('')
+            print('')
+        print('last_item_ts: %s' % last_item_ts)
+        print('')
 
-        print 'size of data:     %d' % len(data)
-        print 'size of new data: %d' % len(data_new)
+        print('size of data:     %d' % len(data))
+        print('size of new data: %d' % len(data_new))
 
         if (len(data_new)):
             path = write_to_data_file(BASE_DIR_CURRENT, data_new, last_item_ts)
@@ -171,9 +171,9 @@ def main():
         ## wait until the top of the minute + WAIT_OFFSET
         ##
         hms = get_current_utc_hms()
-        # print hms
+        # print(hms)
         poll_min = hms[1]
-        print 'poll_min: %s' % poll_min
+        print('poll_min: %s' % poll_min)
 
         sec = hms[2]
         wait_time = (60.0 - sec) + WAIT_OFFSET
@@ -182,8 +182,8 @@ def main():
         if wait_time < 30.0:
             wait_time += 60.0
         wait_time += 120.0
-        print 'waiting for %f seconds' % wait_time
-        print ''
+        print('waiting for %f seconds' % wait_time)
+        print('')
 
         time.sleep(wait_time)
 
@@ -201,9 +201,9 @@ def write_to_data_file(base_dir, data_list, tstamp):
         base_dir_slash += os.path.sep
 
     path = base_dir_slash + tstamp + '.txt'
-    print '    path:          %s' % path
+    print('    path:          %s' % path)
 
-    print 'opening \"%s\" for writing' % path
+    print('opening \"%s\" for writing' % path)
     of = open(path, 'w')
     for data in data_list:
         of.write("start-item:" + NL)
@@ -240,7 +240,7 @@ def write_to_data_file(base_dir, data_list, tstamp):
 # todo: hard-coded variables should be specified in a config file
 #
 def ftp_transfer(pathname):
-    print '  ftp_transfer(\"%s\") ' % pathname
+    print('  ftp_transfer(\"%s\") ' % pathname)
 
     ##
     ## Before using this, add credentials for the host to which you
@@ -270,12 +270,12 @@ def ftp_transfer(pathname):
         # f.retrlines('LIST')
 
         fp = open(pathname)
-        print 'transferring %s to %s' % (pathname, R_DIR)
+        print('transferring %s to %s' % (pathname, R_DIR))
         d = f.storlines('STOR %s' % l_file, fp)
         fp.close
         f.close();
     except:
-        print '#WARNING: failed to ftp to %s' % R_HOSTNAME
+        print('#WARNING: failed to ftp to %s' % R_HOSTNAME)
 
 
 if __name__ == '__main__':

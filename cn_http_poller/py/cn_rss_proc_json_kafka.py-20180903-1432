@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ########################################################################
 # file:    cn_rss_proc_json_kafka.py  (RSS post-processor)
@@ -14,9 +14,14 @@
 # dependencies:
 #          Unix pipe '/tmp/p_cn_hpe_out'
 ########################################################################
-import os, sys, time, re, anydbm
+import os
+import sys
+import time
+import re
+import anydbm
 from cn_rss_doc import CnRssDocument
 import socket
+
 
 def main(hostname):
     #
@@ -26,63 +31,63 @@ def main(hostname):
     # (todo: put this in a separate file)
     #
     if not os.environ.has_key('CN_HOME'):
-        print 'ERROR: environmental variable \'CN_HOME\' not defined'
+        print('ERROR: environmental variable \'CN_HOME\' not defined')
         sys.exit(1)
     ENV_CN_HOME = os.environ['CN_HOME']
     if not os.path.exists(ENV_CN_HOME):
-        print 'ERROR: directory \"' + ENV_CN_HOME + '\" ' + \
+        print('ERROR: directory \"' + ENV_CN_HOME + '\" ' + \
               'defined by environmental ' + \
-              'variable \'CN_HOME\'' + ' does not exist'
+              'variable \'CN_HOME\'' + ' does not exist')
         sys.exit(1)
 
     if not os.environ.has_key('CN_DATA'):
-        print 'ERROR: environmental variable \'CN_DATA\' not defined'
+        print('ERROR: environmental variable \'CN_DATA\' not defined')
         sys.exit(1)
     ENV_CN_DATA = os.environ['CN_DATA']
     if not os.path.exists(ENV_CN_DATA):
-        print 'ERROR: directory \"' + ENV_CN_DATA + '\" ' + \
+        print('ERROR: directory \"' + ENV_CN_DATA + '\" ' + \
               ' defined by environmental ' + \
-              'variable \'CN_DATA\'' + ' does not exist'
+              'variable \'CN_DATA\'' + ' does not exist')
         sys.exit(1)
 
     if not os.environ.has_key('CN_PIPE'):
-        print 'ERROR: environmental variable \'CN_PIPE\' not defined'
+        print('ERROR: environmental variable \'CN_PIPE\' not defined')
         sys.exit(1)
     ENV_CN_PIPE = os.environ['CN_PIPE']
     if not os.path.exists(ENV_CN_PIPE):
         os.mkfifo(ENV_CN_PIPE)
-        print 'creating pipe file \"' + ENV_CN_PIPE + '\"'
-        # print 'ERROR: pipe file \"' + ENV_CN_PIPE + '\ " ' + \
+        print('creating pipe file \"' + ENV_CN_PIPE + '\"')
+        # print('ERROR: pipe file \"' + ENV_CN_PIPE + '\ " ' + \
         #      'defined by environmental ' + \
-        #      'variable \'CN_PIPE\'' + ' does not exist'
+        #      'variable \'CN_PIPE\'' + ' does not exist')
         # sys.exit(1)
 
     if not os.environ.has_key('CN_TMP'):
-        print 'ERROR: environmental variable \'CN_TMP\' not defined'
+        print('ERROR: environmental variable \'CN_TMP\' not defined')
         sys.exit(1)
     ENV_CN_TMP = os.environ['CN_TMP']
     if not os.path.exists(ENV_CN_TMP):
-        print 'ERROR: tmp file \"' + ENV_CN_TMP + '\" ' + \
+        print('ERROR: tmp file \"' + ENV_CN_TMP + '\" ' + \
               ' defined by environmental ' + \
-              'variable \'CN_TMP\'' + ' does not exist'
+              'variable \'CN_TMP\'' + ' does not exist')
         sys.exit(1)
 
     if not os.environ.has_key('CN_WAIT_OFFSET'):
-        print 'ERROR: environmental variable \'CN_WAIT_OFFSET\' not defined'
+        print('ERROR: environmental variable \'CN_WAIT_OFFSET\' not defined')
         sys.exit(1)
     ENV_CN_WAIT_OFFSET = os.environ['CN_WAIT_OFFSET']
 
-    print 'ENV_CN_HOME:        ' + ENV_CN_HOME
-    print 'ENV_CN_DATA:        ' + ENV_CN_DATA
-    print 'ENV_CN_PIPE:        ' + ENV_CN_PIPE
-    print 'ENV_CN_TMP:         ' + ENV_CN_TMP
-    print 'ENV_CN_WAIT_OFFSET: ' + ENV_CN_WAIT_OFFSET
+    print('ENV_CN_HOME:        ' + ENV_CN_HOME)
+    print('ENV_CN_DATA:        ' + ENV_CN_DATA)
+    print('ENV_CN_PIPE:        ' + ENV_CN_PIPE)
+    print('ENV_CN_TMP:         ' + ENV_CN_TMP)
+    print('ENV_CN_WAIT_OFFSET: ' + ENV_CN_WAIT_OFFSET)
 
     BASE_DIR_PROC_JSON = ENV_CN_DATA
     if not BASE_DIR_PROC_JSON.endswith(os.sep):
         BASE_DIR_PROC_JSON += os.sep
     BASE_DIR_PROC_JSON += 'rss_proc_json'
-    print 'BASE_DIR_PROC_JSON: ' + BASE_DIR_PROC_JSON
+    print('BASE_DIR_PROC_JSON: ' + BASE_DIR_PROC_JSON)
 
     POSTPROC_OUT_PIPE = ENV_CN_PIPE
     WAIT_OFFSET = float(ENV_CN_WAIT_OFFSET)
@@ -97,7 +102,7 @@ def main(hostname):
             continue
         line = line.strip()
 
-        print ">>>" + line + "<<<"
+        print(">>>" + line + "<<<")
 
 
 def hexdump(str_arg):

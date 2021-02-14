@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ########################################################################
 # file:    test_kafka_consumer.py
@@ -24,22 +24,23 @@ kafka_servers = ['192.168.1.204:9092']
 kafka_topic = 'cnrp-nrt-feed'
 
 consumer = KafkaConsumer(kafka_topic, bootstrap_servers=kafka_servers)
-print "starting Kafka consumer"
-print "Kafka servers: %s" % kafka_servers
-print "Kafka topic:   %s" % kafka_topic
+print("starting Kafka consumer")
+print("Kafka servers: %s" % kafka_servers)
+print("Kafka topic:   %s" % kafka_topic)
 
 a = consumer.assignment()
-print "assignment: %s" % str(a)
+print("assignment: %s" % str(a))
 
 #b = consumer.beginning_offsets([0])
-#print "beginning_offsets: %s" % str(b)
+#print("beginning_offsets: %s" % str(b))
 
 for msg in consumer:
-    print "msg.topic:     %s" % msg.topic
-    print "msg.partition: %d" % msg.partition
-    print "msg.offset:    %d" % msg.offset
-    print "msg.key:       %s" % msg.key
-    print "msg.value:     \"%s\"" % msg.value
-    #print "%s" % msg.value
-    print ""
+    print()
+    print("msg.topic:     %s" % msg.topic)
+    print("msg.partition: %d" % msg.partition)
+    print("msg.offset:    %d" % msg.offset)
+    print("msg.key:       %s" % msg.key)
+    print("msg.value:     \"%s\"" % msg.value)
+    #print("%s" % msg.value)
+    print("")
 

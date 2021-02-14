@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ########################################################################
 # file:    cn_rss_proc_json_kafka.py  (RSS post-processor)
@@ -36,61 +36,61 @@ def main(hostname):
     #
     # get environmental variables, and verify they refer to existing
     # objects
-    #
+    #i
     # (todo: put this in a separate file)
     #
     if not os.environ.has_key('CN_HOME'):
-        print 'ERROR: environmental variable \'CN_HOME\' not defined'
+        print('ERROR: environmental variable \'CN_HOME\' not defined')
         sys.exit(1)
     ENV_CN_HOME = os.environ['CN_HOME']
     if not os.path.exists(ENV_CN_HOME):
-        print 'ERROR: directory \"' + ENV_CN_HOME + '\" ' + \
+        print('ERROR: directory \"' + ENV_CN_HOME + '\" ' + \
               'defined by environmental ' + \
-              'variable \'CN_HOME\'' + ' does not exist'
+              'variable \'CN_HOME\'' + ' does not exist')
         sys.exit(1)
 
     if not os.environ.has_key('CN_DATA'):
-        print 'ERROR: environmental variable \'CN_DATA\' not defined'
+        print('ERROR: environmental variable \'CN_DATA\' not defined')
         sys.exit(1)
     ENV_CN_DATA = os.environ['CN_DATA']
     if not os.path.exists(ENV_CN_DATA):
-        print 'ERROR: directory \"' + ENV_CN_DATA + '\" ' + \
+        print('ERROR: directory \"' + ENV_CN_DATA + '\" ' + \
               ' defined by environmental ' + \
-              'variable \'CN_DATA\'' + ' does not exist'
+              'variable \'CN_DATA\'' + ' does not exist')
         sys.exit(1)
 
     if not os.environ.has_key('CN_PIPE'):
-        print 'ERROR: environmental variable \'CN_PIPE\' not defined'
+        print('ERROR: environmental variable \'CN_PIPE\' not defined')
         sys.exit(1)
     ENV_CN_PIPE = os.environ['CN_PIPE']
     if not os.path.exists(ENV_CN_PIPE):
         os.mkfifo(ENV_CN_PIPE)
-        print 'creating pipe file \"' + ENV_CN_PIPE + '\"'
-        # print 'ERROR: pipe file \"' + ENV_CN_PIPE + '\ " ' + \
+        print('creating pipe file \"' + ENV_CN_PIPE + '\"')
+        # print('ERROR: pipe file \"' + ENV_CN_PIPE + '\ " ' + \
         #      'defined by environmental ' + \
-        #      'variable \'CN_PIPE\'' + ' does not exist'
+        #      'variable \'CN_PIPE\'' + ' does not exist')
         # sys.exit(1)
 
     if not os.environ.has_key('CN_TMP'):
-        print 'ERROR: environmental variable \'CN_TMP\' not defined'
+        print('ERROR: environmental variable \'CN_TMP\' not defined')
         sys.exit(1)
     ENV_CN_TMP = os.environ['CN_TMP']
     if not os.path.exists(ENV_CN_TMP):
-        print 'ERROR: tmp file \"' + ENV_CN_TMP + '\" ' + \
+        print('ERROR: tmp file \"' + ENV_CN_TMP + '\" ' + \
               ' defined by environmental ' + \
-              'variable \'CN_TMP\'' + ' does not exist'
+              'variable \'CN_TMP\'' + ' does not exist')
         sys.exit(1)
 
     if not os.environ.has_key('CN_WAIT_OFFSET'):
-        print 'ERROR: environmental variable \'CN_WAIT_OFFSET\' not defined'
+        print('ERROR: environmental variable \'CN_WAIT_OFFSET\' not defined')
         sys.exit(1)
     ENV_CN_WAIT_OFFSET = os.environ['CN_WAIT_OFFSET']
 
-    print 'ENV_CN_HOME:        ' + ENV_CN_HOME
-    print 'ENV_CN_DATA:        ' + ENV_CN_DATA
-    print 'ENV_CN_PIPE:        ' + ENV_CN_PIPE
-    print 'ENV_CN_TMP:         ' + ENV_CN_TMP
-    print 'ENV_CN_WAIT_OFFSET: ' + ENV_CN_WAIT_OFFSET
+    print('ENV_CN_HOME:        ' + ENV_CN_HOME)
+    print('ENV_CN_DATA:        ' + ENV_CN_DATA)
+    print('ENV_CN_PIPE:        ' + ENV_CN_PIPE)
+    print('ENV_CN_TMP:         ' + ENV_CN_TMP)
+    print('ENV_CN_WAIT_OFFSET: ' + ENV_CN_WAIT_OFFSET)
 
     BASE_DIR_PROC = ENV_CN_DATA
     if not BASE_DIR_PROC.endswith(os.sep):
@@ -120,7 +120,7 @@ def main(hostname):
             continue
         line = line.strip()
         ## 20180903-1500
-        #print "line>>>%s<<<" % line
+        #print("line>>>%s<<<" % line)
 
         #
         # create output file - but only for new-day rollover
@@ -180,17 +180,17 @@ def proc_rss_file(path_arg, ofp_arg, tmp_dir, kafka_prod):
             if pod_flag2:
                 if len(uid) < 1:
                     uid = item['url']
-                    print ''
-                    print '  item[guid]: \"%s\"' % item['guid']
-                    print '    type: ', type(item['guid'])
-                    print '    len:  ', len(item['guid'])
-                    print '  item[title]: \"%s\"' % item['title']
-                    print '  item[text]: \"%s\"' % item['text']
-                    print '  item[pubdate]: \"%s\"' % item['pubdate']
-                    print '  item[url]: \"%s\"' % item['url']
-                    print '  item[author]: \"%s\"' % item['author']
-                    print '  item[summary]: \"%s\"' % item['summary']
-                    print ''
+                    print('')
+                    print('  item[guid]: \"%s\"' % item['guid'])
+                    print('    type: ', type(item['guid']))
+                    print('    len:  ', len(item['guid']))
+                    print('  item[title]: \"%s\"' % item['title'])
+                    print('  item[text]: \"%s\"' % item['text'])
+                    print('  item[pubdate]: \"%s\"' % item['pubdate'])
+                    print('  item[url]: \"%s\"' % item['url'])
+                    print('  item[author]: \"%s\"' % item['author'])
+                    print('  item[summary]: \"%s\"' % item['summary'])
+                    print('')
 
         # if is_unique_guid(item['guid'], src, tstamp, tmp_dir):
         if is_unique_guid(uid, src, tstamp, tmp_dir):
@@ -491,11 +491,11 @@ def set_output_path_proc(base_dir_arg):
 
     path = dir + os.sep + file
 
-    # print '##'
-    # print '## dir:  %s ' % dir
-    # print '## file: %s ' % file
-    # print '## path: %s ' % path
-    # print '##'
+    # print('##')
+    # print('## dir:  %s ' % dir)
+    # print('## file: %s ' % file)
+    # print('## path: %s ' % path)
+    # print('##')
 
     return path
 

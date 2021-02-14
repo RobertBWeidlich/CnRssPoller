@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ########################################################################
 # file:    proc_file_to_solr_json.py
@@ -45,7 +45,7 @@ def proc_file_to_solr_json(in_path, out_path):
         if (len(line) > 0) and (line[0] == "#"):
             continue
 
-        print "%d >>>%s<<<" % (line_no, line)
+        print("%d >>>%s<<<" % (line_no, line))
         #if line_no > 60:
         #    break
         if line == "end-item:":
@@ -77,25 +77,25 @@ def proc_file_to_solr_json(in_path, out_path):
             # new field?
             pm1 = po1.match(line)
             if pm1:
-                #print "group 1 0: \"%s\": " % pm1.group(0)
-                #print "group 1 1: \"%s\": " % pm1.group(1)
+                #print("group 1 0: \"%s\": " % pm1.group(0))
+                #print("group 1 1: \"%s\": " % pm1.group(1))
                 fld_name = pm1.group(1)
                 cur_field = fld_name
                 po[cur_field] = ""
-                #print "MATCH 1"
+                #print("MATCH 1")
             else:
                 pm2 = po2.match(line)
                 if pm2:
-                    # print "group 2 0: \"%s\": " % pm2.group(0)
-                    # print "group 2 1: \"%s\": " % pm2.group(1)
-                    # print "group 2 2: \"%s\": " % pm2.group(2)
+                    # print("group 2 0: \"%s\": " % pm2.group(0))
+                    # print("group 2 1: \"%s\": " % pm2.group(1))
+                    # print("group 2 2: \"%s\": " % pm2.group(2))
                     fld_name = pm2.group(1)
                     cur_field = fld_name
                     if cur_field == 'text1':
-                        print "HERE..."
+                        print("HERE...")
                     text = pm2.group(2).strip()
                     po[cur_field] = text
-                    # print "MATCH 2"
+                    # print("MATCH 2")
                     continue
 
                 #  continuation line
@@ -104,7 +104,7 @@ def proc_file_to_solr_json(in_path, out_path):
                     try:
                         po[cur_field] += text
                     except:
-                        print "ERROR: cur_field %s not correct" % cur_field
+                        print("ERROR: cur_field %s not correct" % cur_field)
 
     jo = json.dumps(pl, sort_keys=True, indent=2, encoding='latin-1')
     in_file.close()
@@ -134,10 +134,10 @@ def convert_to_solr_timestamp(rp_ts):
 if __name__ == '__main__':
     argc = len(sys.argv)
     if (argc < 3):
-        print "usage: %s in-path out-path" % sys.argv[0]
+        print("usage: %s in-path out-path" % sys.argv[0])
         sys.exit(1)
-    # print "len(sys.argv): %s" % str(argc)
-    # print "current dir:   %s" % os.getcwd()
+    # print("len(sys.argv): %s" % str(argc))
+    # print("current dir:   %s" % os.getcwd())
     in_file = sys.argv[1]
     out_file = sys.argv[2]
     proc_file_to_solr_json(in_file, out_file)

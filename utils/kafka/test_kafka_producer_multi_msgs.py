@@ -22,7 +22,7 @@ kafka_msg_list = [ \
 prod = KafkaProducer(bootstrap_servers=kafka_servers)
 
 for msg in kafka_msg_list:
-    print "sending message \"%s\"" % msg
+    print("sending message \"%s\"" % msg)
     future = prod.send(kafka_topic, msg)
 
 try:
@@ -31,7 +31,7 @@ except KafkaError:
     #log.exception()
     pass
 
-print "topic:     " + str(rec_metadata.topic)
-print "partition: " + str(rec_metadata.partition)
-print "offset:    " + str(rec_metadata.offset)
+print("topic:     " + str(rec_metadata.topic))
+print("partition: " + str(rec_metadata.partition))
+print("offset:    " + str(rec_metadata.offset))
 

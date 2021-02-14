@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ########################################################################
 # file:    cnrp_dump_json_np.py
@@ -11,54 +11,56 @@ import os
 import sys
 import json
 
+
 def cnrp_dump_json_np(json_data):
-    print "JSON DATA:"
-    print ">>>"
-    print "%s" % json_data
-    print "<<<"
+    print("JSON DATA:")
+    print(">>>")
+    print("%s" % json_data)
+    print("<<<")
 
     # convert JSON to python object
     jo = json.loads(json_data, encoding="utf8")
-    #print "%s" % str(jo)
-    #print "type: %s" % (str(type(jo)))
+    # print("%s" % str(jo))
+    # print("type: %s" % (str(type(jo))))
     jo_keys = jo.keys()
     jo_keys.sort()
-    #print jo_keys
+    # print(jo_keys)
     for jo_key in jo_keys:
-        print "jo_key: \"%s\":" % jo_key
-        print ">>>"
+        print("jo_key: \"%s\":" % jo_key)
+        print(">>>")
         try:
-            print "[1]: jo[jo_key]"
-            print jo[jo_key]
+            print("[1]: jo[jo_key]")
+            print(jo[jo_key])
         except Exception as e:
-            print "ERROR"
-            print e
-            print "Trying 2nd time:"
+            print("ERROR")
+            print(e)
+            print("Trying 2nd time:")
             try:
-                print "[2] str(jo[jo[jo_key])"
-                print str(jo[jo_key])
+                print("[2] str(jo[jo[jo_key])")
+                print(str(jo[jo_key]))
             except Exception as e:
-                print "ERROR:"
-                print e
-                print "Trying 3rd time - :"
+                print("ERROR:")
+                print(e)
+                print("Trying 3rd time - :")
                 try:
-                    print "[3] repr(jo[jo[jo_key])"
-                    print repr(jo[jo_key])
+                    print("[3] repr(jo[jo[jo_key])")
+                    print(repr(jo[jo_key]))
                 except Exception as e:
-                    print "ERROR:"
-                    print e
-        print "<<<"
+                    print("ERROR:")
+                    print(e)
+        print("<<<")
+
 
 if __name__ == '__main__':
     #
     # usage: ./cnrp_dump_json_np [file.json]
     #
-    #TEST_HC_FILE = True
+    # TEST_HC_FILE = True
     TEST_HC_FILE = False
 
     argc = len(sys.argv)
-    #print "argc:     %d" % argc
-    #print "sys.argv: %s" % str(sys.argv)
+    # print("argc:     %d" % argc)
+    # print("sys.argv: %s" % str(sys.argv))
 
     in_buf = ""
 
@@ -67,7 +69,7 @@ if __name__ == '__main__':
     #
     if TEST_HC_FILE:
         TEST_INPUT_FILE1 = "/tmp/nf_01_from_kafka_cnrt-nrt-feed/" + \
-            "331338843061776"
+                           "331338843061776"
 
         TEST_INPUT_FILE = TEST_INPUT_FILE1
         in_file = TEST_INPUT_FILE1
@@ -96,4 +98,3 @@ if __name__ == '__main__':
     cnrp_dump_json_np(in_buf)
 
     sys.exit(0)
-

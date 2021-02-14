@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ################################################################
 # file:    cn_analyze_proc_file.py
@@ -13,49 +13,50 @@ from cn_hp_utils import parse_proc_items
 def cn_analyze_proc_file(proc_file_arg):
     proc_file = proc_file_arg
     items = parse_proc_items(proc_file)
-    # print type(items)
-    # print len(items)
+    # print(type(items))
+    # print(len(items))
     count_by_src = {}
 
-    print '##'
-    print '## 1. RSS sources:'
-    print '##'
+    print('##')
+    print('## 1. RSS sources:')
+    print('##')
     for item in items:
-        # print item
-        print item['tstamp'], item['src']
+        # print(item)
+        print(item['tstamp'], item['src'])
         src = item['src']
         if count_by_src.has_key(src):
             count_by_src[src] += 1
         else:
             count_by_src[src] = 1
-    print ''
+    print('')
 
-    # print count_by_src
-    # print ''
+    # print(count_by_src)
+    # print('')
     keys = count_by_src.keys()
-    ##print keys
+    ##print(keys)
 
     ##
     ## sort by keys (src name)
     ##
-    print '##'
-    print '## 2. sort by keys (name of src)'
-    print '##'
+    print('##')
+    print('## 2. sort by keys (name of src)')
+    print('##')
     keys.sort()
     for key in keys:
-        print "%s %d" % (key, count_by_src[key])
-    print ''
+        print("%s %d" % (key, count_by_src[key]))
+    print('')
 
     ##
     ## sort by values (src count)
     ##
-    print '##'
-    print '## 3. sort by values'
-    print '##'
+    print('##')
+    print('## 3. sort by values')
+    print('##')
 
     for k in sorted(count_by_src, key=count_by_src.get, reverse=True):
-        print "%s %d" % (k, count_by_src[k])
-    print ''
+        print
+        "%s %d" % (k, count_by_src[k])
+    print('')
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 ##
 ## test regular expressions
 ##
@@ -24,15 +24,15 @@ re_patt_obj = re.compile(re_patt_str)
 match_obj = re_patt_obj.match(test_str)
 
 if (not match_obj):
-  print 'RE failed...'
+  print('RE failed...')
   sys.exit(0)
 
-print match_obj
+print(match_obj)
 
 #print 'number of groups: %d' % 
 
-print 'group 1: \"%s\"' % match_obj.group(1)
-print 'group 2: \"%s\"' % match_obj.group(2)
+print('group 1: \"%s\"' % match_obj.group(1))
+print('group 2: \"%s\"' % match_obj.group(2))
 
 
 

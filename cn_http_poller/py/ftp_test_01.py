@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 ##
 ## test ftp
 ##
@@ -10,11 +10,9 @@ f = ftplib.FTP('polyticker.com')
 f.login('**********', '***********')
 
 f.cwd('polyticker.com/data/cn/rss_current')
-#f.retrlines('LIST')
+# f.retrlines('LIST')
 
 fp = open('/home/ec2-user/data2/cn/rss_current/20121002.0034.13.txt')
 d = f.storlines('STOR 20121002.0034.13.txt', fp)
 fp.close();
 f.close();
-
-

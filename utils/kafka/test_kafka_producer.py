@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ########################################################################
 # file:    test_kafka_producer.py
@@ -24,7 +24,7 @@ except KafkaError:
     #log.exception()
     pass
 
-print "topic:     " + str(rec_metadata.topic)
-print "partition: " + str(rec_metadata.partition)
-print "offset:    " + str(rec_metadata.offset)
+print("topic:     " + str(rec_metadata.topic))
+print("partition: " + str(rec_metadata.partition))
+print("offset:    " + str(rec_metadata.offset))
 

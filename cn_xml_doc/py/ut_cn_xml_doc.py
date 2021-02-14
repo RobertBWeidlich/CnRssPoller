@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ########################################################################
 # file:    ut_cn_xml_doc.py
@@ -15,7 +15,7 @@ from cn_xml_doc import CnXmlDocument
 
 def main():
     cd = os.getcwd()
-    print "current directory: " + cd
+    print("current directory: " + cd)
 
     data_dir = "../../resources/data/"
     path_01 = data_dir + "cn_rss_raw-news.latimes-20180113.2304.13.xml"
@@ -25,7 +25,7 @@ def main():
 
     path = path_01
 
-    print 'testing on file \"%s\"' % path
+    print('testing on file \"%s\"' % path)
 
     gxp = CnXmlDocument(xml_file_arg=path, debug_arg=False)
     print('###Items###')

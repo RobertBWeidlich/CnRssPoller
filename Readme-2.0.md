@@ -35,7 +35,7 @@ standalone]
         ls /kafka
         ...
 
-2. Download and install Kafka, if necessary
+1. Download and install Kafka, if necessary
 
    Edit Kafka config file
 
@@ -45,7 +45,7 @@ standalone]
 
         zookeeper.connect=localhost:2181/kafka
 
-3. Start Kafka:
+1. Start Kafka:
 
     [Window-3]
     cd {KAFKA_INSTALL_DIR}
