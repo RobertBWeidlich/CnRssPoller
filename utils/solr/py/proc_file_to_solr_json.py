@@ -3,7 +3,7 @@
 ########################################################################
 # file:    proc_file_to_solr_json.py
 # author:  rbw
-# date:    Tue Apr 10 17:46:09 PDT 2018
+# date:    Mon Feb 15 14:24:34 EST 2021
 # purpose: Convert data in CN RSS proc format to Solr JSON format
 #   CN RSS proc format:
 #     /data1/cn/rss_proc/2018
@@ -58,7 +58,7 @@ def proc_file_to_solr_json(in_path, out_path):
                 #
                 # add "ingest_time" field
                 #
-                if po.has_key("tstamp"):
+                if "tstamp" in po:
                     po['ingest_time'] = convert_to_solr_timestamp(po['tstamp'])
                 pl.append(po)
                 po = {}

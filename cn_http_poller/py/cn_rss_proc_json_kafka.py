@@ -39,7 +39,7 @@ def main(hostname):
     #i
     # (todo: put this in a separate file)
     #
-    if not os.environ.has_key('CN_HOME'):
+    if not 'CN_HOME' in os.environ:
         print('ERROR: environmental variable \'CN_HOME\' not defined')
         sys.exit(1)
     ENV_CN_HOME = os.environ['CN_HOME']
@@ -49,7 +49,7 @@ def main(hostname):
               'variable \'CN_HOME\'' + ' does not exist')
         sys.exit(1)
 
-    if not os.environ.has_key('CN_DATA'):
+    if not 'CN_DATA' in os.environ:
         print('ERROR: environmental variable \'CN_DATA\' not defined')
         sys.exit(1)
     ENV_CN_DATA = os.environ['CN_DATA']
@@ -59,7 +59,7 @@ def main(hostname):
               'variable \'CN_DATA\'' + ' does not exist')
         sys.exit(1)
 
-    if not os.environ.has_key('CN_PIPE'):
+    if not 'CN_PIPE' in os.environ:
         print('ERROR: environmental variable \'CN_PIPE\' not defined')
         sys.exit(1)
     ENV_CN_PIPE = os.environ['CN_PIPE']
@@ -71,7 +71,7 @@ def main(hostname):
         #      'variable \'CN_PIPE\'' + ' does not exist')
         # sys.exit(1)
 
-    if not os.environ.has_key('CN_TMP'):
+    if not 'CN_TMP' in os.environ:
         print('ERROR: environmental variable \'CN_TMP\' not defined')
         sys.exit(1)
     ENV_CN_TMP = os.environ['CN_TMP']
@@ -81,7 +81,7 @@ def main(hostname):
               'variable \'CN_TMP\'' + ' does not exist')
         sys.exit(1)
 
-    if not os.environ.has_key('CN_WAIT_OFFSET'):
+    if not 'CN_WAIT_OFFSET' in os.environ:
         print('ERROR: environmental variable \'CN_WAIT_OFFSET\' not defined')
         sys.exit(1)
     ENV_CN_WAIT_OFFSET = os.environ['CN_WAIT_OFFSET']
@@ -377,12 +377,12 @@ def is_unique_guid(guid_arg, source_arg, tstamp_arg, tmp_dir):
     try:
         # ERROR - 110216.0750 - for unicode characters
         # guid_arg_str = str(guid_arg) # error here
-        if db_today.has_key(db_key):
+        if db_key in db_today:
             is_unique = False
         else:
             db_today[db_key] = timestamp  # register this key
             db_yesterday = anydbm.open(dbm_pname_yesterday, 'c')
-            if db_yesterday.has_key(db_key):
+            if db_key in db_yesterday:
                 # confirm this feature works...
                 print('# found in yesterday, not today: \"%s\"' % db_key)
                 is_unique = False

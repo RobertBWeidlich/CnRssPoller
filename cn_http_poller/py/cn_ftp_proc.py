@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cn_ftp_proc.py
 # author:  rbw
-# date:    Mon Feb 15 13:40:54 EST 2021
+# date:    Mon Feb 15 14:12:16 EST 2021
 # purpose: send updates of the post-processed data files to a remote
 #          ftp client
 #
@@ -22,7 +22,7 @@ def main():
     # get environmental variables, and verify they refer to existing
     # objects
     #
-    if not os.environ.has_key('CN_HOME'):
+    if not 'CN_HOME' in os.environ:
         print('ERROR: environmental variable \'CN_HOME\' not defined')
         sys.exit(1)
     ENV_CN_HOME = os.environ['CN_HOME']
@@ -32,7 +32,7 @@ def main():
               'variable \'CN_HOME\'' + ' does not exist')
         sys.exit(1)
 
-    if not os.environ.has_key('CN_DATA'):
+    if not 'CN_DATA' os.environ:
         print('ERROR: environmental variable \'CN_DATA\' not defined')
         sys.exit(1)
     ENV_CN_DATA = os.environ['CN_DATA']
@@ -42,7 +42,7 @@ def main():
               'variable \'CN_DATA\'' + ' does not exist')
         sys.exit(1)
 
-    if not os.environ.has_key('CN_PIPE'):
+    if not 'CN_PIPE' in os.environ:
         print('ERROR: environmental variable \'CN_PIPE\' not defined')
         sys.exit(1)
     ENV_CN_PIPE = os.environ['CN_PIPE']
@@ -51,7 +51,7 @@ def main():
         print('creating pipe file \"' + ENV_CN_PIPE + '\"')
         # sys.exit(1)
 
-    if not os.environ.has_key('CN_TMP'):
+    if not 'CN_TMP' in os.environ:
         print('ERROR: environmental variable \'CN_TMP\' not defined')
         sys.exit(1)
     ENV_CN_TMP = os.environ['CN_TMP']
@@ -61,7 +61,7 @@ def main():
               'variable \'CN_TMP\'' + ' does not exist')
         sys.exit(1)
 
-    if not os.environ.has_key('CN_WAIT_OFFSET'):
+    if not 'CN_WAIT_OFFSET' in os.environ:
         print('ERROR: environmental variable \'CN_WAIT_OFFSET\' not defined')
         sys.exit(1)
     ENV_CN_WAIT_OFFSET = os.environ['CN_WAIT_OFFSET']
@@ -207,25 +207,25 @@ def write_to_data_file(base_dir, data_list, tstamp):
     of = open(path, 'w')
     for data in data_list:
         of.write("start-item:" + NL)
-        if data.has_key('path'):
+        if 'path') in data:
             of.write('path:    %s\n' % data['path'])
-        if data.has_key('src'):
+        if 'src') in data:
             of.write('src:     %s\n' % data['src'])
-        if data.has_key('tstamp'):
+        if 'tstamp') in data:
             of.write('tstamp:  %s\n' % data['tstamp'])
-        if data.has_key('pubdate'):
+        if 'pubdate') in data:
             of.write('pubdate: %s\n' % data['pubdate'])
-        if data.has_key('author'):
+        if 'author') in data:
             of.write('author:  %s\n' % data['author'])
-        if data.has_key('guid'):
+        if 'guid') in data:
             of.write('guid:    %s\n' % data['guid'])
-        if data.has_key('url'):
+        if 'url') in data:
             of.write('url:     %s\n' % data['url'])
-        if data.has_key('title'):
+        if 'title') in data:
             of.write('title:   %s\n' % data['title'])
-        if data.has_key('summary'):
+        if 'summary') in data:
             of.write('summary: %s\n' % data['summary'])
-        if data.has_key('text1'):
+        if 'text1') in data:
             of.write('text1:   %s\n' % data['text1'])
 
         of.write("end-item:" + NL)

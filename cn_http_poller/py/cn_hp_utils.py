@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cn_hp_utils.py
 # author:  rbw
-# date:    Mon Feb 15 13:40:54 EST 2021
+# date:    Mon Feb 15 14:13:22 EST 2021
 # purpose: common utilities for cn_http_poller
 ########################################################################
 import os, sys, time
@@ -221,7 +221,7 @@ def parse_proc_items(pathname_arg):
                     item[tag] = data
                     pass
             else:
-                if item.has_key(tag):
+                if tag in item:
                     item[tag] += os.linesep
                     item[tag] += line
                 else:

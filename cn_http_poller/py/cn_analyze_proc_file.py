@@ -3,7 +3,7 @@
 ################################################################
 # file:    cn_analyze_proc_file.py
 # author:  rbw
-# date:    Mon Feb 15 13:40:54 EST 2021
+# date:    Mon Feb 15 14:02:38 EST 2021
 # purpose: analyze data in CN RSS processed files
 ################################################################
 import os, sys
@@ -24,7 +24,7 @@ def cn_analyze_proc_file(proc_file_arg):
         # print(item)
         print(item['tstamp'], item['src'])
         src = item['src']
-        if count_by_src.has_key(src):
+        if src in count_by_src:
             count_by_src[src] += 1
         else:
             count_by_src[src] = 1

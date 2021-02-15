@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cn_rss_proc_batch.py
 # author:  rbw
-# date:    Mon Feb 15 13:40:54 EST 2021
+# date:    Mon Feb 15 14:22:34 EST 2021
 # purpose: Process a batch of raw RSS or Atom documents:
 #            - dedup
 #            - clean text
@@ -111,7 +111,7 @@ def process_data_file(path_arg):
             ##
             try:
                 # print('%d 117' % pdf_count)
-                if unique_strs.has_key(guid_hash):
+                if guid_hash in unique_strs:
                     # print('..... 0x%016x: %s' % (guid_hash, guid))
                     # print('.....  %d: %s' % (guid_hash, guid))
                     pass
