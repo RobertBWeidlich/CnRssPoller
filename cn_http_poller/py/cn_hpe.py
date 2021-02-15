@@ -22,7 +22,7 @@ def main(cfg_file_arg, hostname):
     # get environmental variables, and verify they refer to existing
     # objects
     #
-    if not os.environ.has_key('CN_HOME'):
+    if not 'CN_HOME' in os.environ:
         print('ERROR: environmental variable \'CN_HOME\' not defined')
         sys.exit(1)
     ENV_CN_HOME = os.environ['CN_HOME']
@@ -32,7 +32,7 @@ def main(cfg_file_arg, hostname):
               'variable \'CN_HOME\'' + ' does not exist')
         sys.exit(1)
 
-    if not os.environ.has_key('CN_DATA'):
+    if not 'CN_DATA' in os.environ:
         print('ERROR: environmental variable \'CN_DATA\' not defined')
         sys.exit(1)
     ENV_CN_DATA = os.environ['CN_DATA']
@@ -42,7 +42,7 @@ def main(cfg_file_arg, hostname):
               'variable \'CN_DATA\'' + ' does not exist')
         sys.exit(1)
 
-    if not os.environ.has_key('CN_PIPE'):
+    if not 'CN_PIPE' in os.environ:
         print('ERROR: environmental variable \'CN_PIPE\' not defined')
         sys.exit(1)
     ENV_CN_PIPE = os.environ['CN_PIPE']
@@ -51,7 +51,7 @@ def main(cfg_file_arg, hostname):
         print('creating pipe file \"' + ENV_CN_PIPE + '\"')
         # sys.exit(1)
 
-    if not os.environ.has_key('CN_TMP'):
+    if not 'CN_TMP' in os.environ:
         print('ERROR: environmental variable \'CN_TMP\' not defined')
         sys.exit(1)
     ENV_CN_TMP = os.environ['CN_TMP']
@@ -61,7 +61,7 @@ def main(cfg_file_arg, hostname):
               'variable \'CN_TMP\'' + ' does not exist')
         sys.exit(1)
 
-    if not os.environ.has_key('CN_WAIT_OFFSET'):
+    if not 'CN_WAIT_OFFSET' in os.environ:
         print('ERROR: environmental variable \'CN_WAIT_OFFSET\' not defined')
         sys.exit(1)
     ENV_CN_WAIT_OFFSET = os.environ['CN_WAIT_OFFSET']

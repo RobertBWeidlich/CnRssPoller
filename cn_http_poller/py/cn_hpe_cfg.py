@@ -145,8 +145,10 @@ class CnHpeCfg():
         print('')
         print('dumping configuration:')
         print(' Name to URL dictionary:')
-        keys = self.n2u_dict.keys()
-        keys.sort()
+        #keys = self.n2u_dict.keys()
+        keys = list(self.n2u_dict.keys())
+        print(f"type(keys): {type(keys)}")
+        #keys.sort()
 
         #
         # first size the columns
