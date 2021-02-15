@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cn_rss_proc_batch.py
 # author:  rbw
-# date:    110111.2155
+# date:    Mon Feb 15 13:40:54 EST 2021
 # purpose: Process a batch of raw RSS or Atom documents:
 #            - dedup
 #            - clean text

@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cn_rss_proc.py  (RSS post-processor)
 # author:  rbw
-# date:    Sat Mar  2 19:48:20 UTC 2013
+# date:    Mon Feb 15 13:40:54 EST 2021
 # purpose: Post-processor for RSS files - dedup, convert to plain text
 #          and feed to text mining apps.
 # dependencies:

@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cn_hp_utils.py
 # author:  rbw
-# date:    20121001.2224
+# date:    Mon Feb 15 13:40:54 EST 2021
 # purpose: common utilities for cn_http_poller
 ########################################################################
 import os, sys, time

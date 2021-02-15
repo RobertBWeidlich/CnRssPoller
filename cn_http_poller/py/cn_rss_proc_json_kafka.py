@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cn_rss_proc_json_kafka.py  (RSS post-processor)
 # author:  rbw
-# date:    Mon Sep  3 14:40:51 PDT 2018
+# date:    Mon Feb 15 13:40:54 EST 2021
 # purpose: Post-processor for RSS files:
 #            1. dedup RSS data,
 #            2. convert to JSON

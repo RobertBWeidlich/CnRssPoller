@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cn_ftp_proc.py
 # author:  rbw
-# date:    Sun Apr 14 14:05:55 EDT 2013
+# date:    Mon Feb 15 13:40:54 EST 2021
 # purpose: send updates of the post-processed data files to a remote
 #          ftp client
 #

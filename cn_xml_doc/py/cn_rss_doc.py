@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cn_rss_doc.py
 # author:  rbw
-# date:    101229.2120
+# date:    Mon Feb 15 13:40:54 EST 2021
 # purpose: provide interface to RSS or Atom document
 ########################################################################
 import sys

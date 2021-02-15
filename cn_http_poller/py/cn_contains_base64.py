@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cn_contains_base64.py
 # author:  rbw
-# date:    Wed Oct 11 16:28:38 PDT 2017
+# date:    Mon Feb 15 13:40:54 EST 2021
 # purpose: detect a base64-encoded string in text
 ########################################################################
 import os, sys

@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cn_proc_rss_to_html.py
 # author:  rbw
-# date:    111021.2021
+# date:    Mon Feb 15 13:40:54 EST 2021
 # purpose: Simple conversion of CN processed RSS data to HTML table
 # note:    Some "text1" fields don't have spaces in the first lines...
 #          This could bread this if the first token ends in the

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 ########################################################################
 # file:    cn_dump_nyt.py
-# date:    111127.2045
+# date:    Mon Feb 15 13:40:54 EST 2021
 # purpose: Dump all New York Times data from CN RSS processed files
 #          in a given directory.
 ########################################################################

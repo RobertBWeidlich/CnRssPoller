@@ -3,7 +3,7 @@
 ########################################################################
 # file:    test_kafka_producer.py
 # author:  rbw
-# date:    Fri Aug  3 17:11:07 PDT 2018
+# date:    Mon Feb 15 13:40:54 EST 2021
 # purpose: implement a simple Kafka producer.
 ########################################################################
 from kafka import KafkaProducer

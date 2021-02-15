@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cn_hpe_cfg.py
 # author:  rbw
-# date:    110130.2030
+# date:    Mon Feb 15 13:40:54 EST 2021
 # purpose: maintain information from CN HTTP Poller Exec (cn_hpe.py)
 #          configuration file
 ########################################################################

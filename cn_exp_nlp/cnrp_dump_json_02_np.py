@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cnrp_dump_json_np_02.py
 # author:  rbw
-# date:    Sun Oct 14 19:16:28 PDT 2018
+# date:    Mon Feb 15 13:40:54 EST 2021
 # purpose: NiFi processor to convert JSON data to textual data
 #          to aid in cleaning out HTML artifacts from text.
 ########################################################################

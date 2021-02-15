@@ -3,7 +3,7 @@
 ########################################################################
 # file:    ut_cn_xml_doc.py
 # author:  rbw
-# date:    Sat Jan 13 16:17:40 PST 2018
+# date:    Mon Feb 15 13:40:54 EST 2021
 # purpose: Unit test for cn_xml_doc.py
 #
 # todo:    Test with a non-RSS XML file

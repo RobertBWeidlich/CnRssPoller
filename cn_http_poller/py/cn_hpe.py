@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cn_hpe.py (HTTP Poll Engine)
 # author:  rbw
-# date:    Sat Feb 22 01:01:02 UTC 2020
+# date:    Mon Feb 15 13:40:54 EST 2021
 # purpose: periodically poll list of HTTP sites for HTML, RSS, and Atom
 #          data
 # dependencies:

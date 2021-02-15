@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cn_hp_thr.py 
 # author:  rbw
-# date:    110419.2020
+# date:    Mon Feb 15 13:40:54 EST 2021
 # purpose: poll a single HTTP site - designed to run in a single
 #          Python thread
 # dependencies:
