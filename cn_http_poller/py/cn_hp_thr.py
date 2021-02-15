@@ -12,7 +12,10 @@
 #       "export PYTHONPATH=~/Desktop/Projects2010/cn_xml_doc/py:$PYTHONPATH"
 ########################################################################
 import sys, os
-import urllib, time, re, anydbm
+import urllib
+import time
+import re
+#import anydbm
 import threading
 import random
 from cn_rss_doc import CnRssDocument
