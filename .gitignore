@@ -23,6 +23,7 @@ target/
 
 # Python
 *.pyc
+venv/
 
 # vim backup files
 *.swp

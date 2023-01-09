@@ -12,10 +12,21 @@ Version 2.0 polls a number of RSS Feeds, and sends the de-duped text to
 a Kafka topic and incorporates NiFi.
 
 The goals of this version -- version 3.0 -- are to:
+1. Use Pycharm as development environment
 1. Convert from Python 2 to Python 3
 1. Produce JSON output
 1. Log errors
 1. Generate metrics
 1. Convert archived data to JSON
+
+<h3>Notes</h3>
+1. Store everything in directory "venv/"
+<br/>pip freeze > ./requirements.txt
+<br/>pip -r ./requirements.txt
+1. Use standard Python directory structure:
+<br/>
+```https://docs.python-guide.org/writing/structure/```
+
+
 
 
