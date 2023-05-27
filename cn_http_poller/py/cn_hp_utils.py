@@ -75,7 +75,7 @@ def get_current_utc_hms():
 #
 def get_last_n_proc_data_files(base_dir, n=3):
     base_dir_slash = base_dir
-    if (not base_dir_slash.endswith(os.path.sep)):
+    if not base_dir_slash.endswith(os.path.sep):
         base_dir_slash += os.path.sep
     data_dirs = []
     data_dirs_all = os.listdir(base_dir);

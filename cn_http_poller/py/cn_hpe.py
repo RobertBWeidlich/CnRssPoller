@@ -12,10 +12,9 @@
 import os, sys, urllib, time
 import threading
 import socket
-from cn_hpe_cfg import CnHpeCfg
-from cn_hp_thr import CnHpThr
-from cn_hp_utils import get_current_utc_hms
-
+#from cn_hpe_cfg import CnHpeCfg
+#from cn_hp_thr import CnHpThr
+#from cn_hp_utils import get_current_utc_hms
 
 def main(cfg_file_arg, hostname):
     #
@@ -312,12 +311,31 @@ def set_output_path_proc(base_dir_arg):
 
 
 if __name__ == '__main__':
+    # set library locations - alternative to setting PYTHONPATH
+    # todo: set all libraries to a root path and use "import lib.a.b"
+    cwd = os.getcwd() # current directory of this python script
+    libpath1 = os.sep.join([cwd, '..', '..', 'cn_xml_doc', 'py'])
+    sys.path.append(libpath1)
+    libpath2 = os.sep.join([cwd, '..', '..', 'utils', 'kafka'])
+    sys.path.append(libpath2)
+    libpath3 = os.sep.join([cwd, '..', '..', 'utils', 'solr', 'py'])
+    sys.path.append(libpath3)
+    print(f"sys.path now: {sys.path}")
+
+    from cn_hpe_cfg import CnHpeCfg
+    from cn_hp_thr import CnHpThr
+    from cn_hp_utils import get_current_utc_hms
+
+    configfile_path = ""
     if len(sys.argv) < 2:
-        sys.stderr.write("usage: %s <config-file>\n" % sys.argv[0])
-        sys.exit(1)
+        #sys.stderr.write("usage: %s <config-file>\n" % sys.argv[0])
+        configfile_path = os.sep.join([cwd, '..', 'config', 'cn_hpe.cfg'])
+        print(cwd)
+        print("using configuration file \"{configfile_path}\"")
+    else:
+        configfile_path = sys.argv[1]
 
     hostname = socket.gethostname()
     print('hostname: %s' % hostname)
 
-    cfg_file = sys.argv[1]
-    main(cfg_file, hostname)
+    main(configfile_path, hostname)

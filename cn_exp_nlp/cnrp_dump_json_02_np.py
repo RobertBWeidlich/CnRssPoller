@@ -53,7 +53,7 @@ def cnrp_dump_json_np(json_data):
                     print("[3] \"%-14s\": %s" % (jo_key, repr(jo[jo_key])))
                 except Exception as e:
                     print("[4] ERROR:")
-                    print(e
+                    print(e)
                     print("20191202.1437")
 
                     if __name__ == '__main__':
