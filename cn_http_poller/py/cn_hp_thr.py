@@ -3,22 +3,24 @@
 ########################################################################
 # file:    cn_hp_thr.py 
 # author:  rbw
-# date:    Mon Feb 15 13:40:54 EST 2021
+# date:    Sun May 28 18:15:36 EDT 2023
 # purpose: poll a single HTTP site - designed to run in a single
 #          Python thread
 # dependencies:
 #          cn_xml_doc (make sure something like this is defined:
 #
-#       "export PYTHONPATH=~/Desktop/Projects2010/cn_xml_doc/py:$PYTHONPATH"
+#       "export PYTHONPATH=/opt/cn_hp_poller/cn_xml_doc/py:$PYTHONPATH"
 ########################################################################
-import sys, os
-import urllib
+import sys
+import os
+import urllib.request
+import urllib.error
 import time
 import re
 #import anydbm
 import threading
 import random
-from cn_rss_doc import CnRssDocument
+#from cn_rss_doc import CnRssDocument
 
 
 class CnHpThr(threading.Thread):  # subclass of threading.Thread
@@ -43,12 +45,12 @@ class CnHpThr(threading.Thread):  # subclass of threading.Thread
         #
         # 1. poll site
         #
-        if False:
-            print('777')
-            print('self.url:              %s' % self.url)
-            print('self.out_filename_raw: %s' % self.out_filename_raw)
-            print('777')
-        urllib.urlretrieve(self.url, self.out_filename_raw)
+        try:
+            urllib.request.urlretrieve(self.url, self.out_filename_raw)
+        except Exception as err:
+            print(f"WARNING: urllib.request.urlretrieve() failed for URL \"{self.url}\" - {str(err)}")
+
+        # TODO: what to do if urlretrieve() failed??
 
         #
         # 2. notify RSS post-processing utility via Unix pipe
@@ -58,8 +60,8 @@ class CnHpThr(threading.Thread):  # subclass of threading.Thread
         try:
             self.p_file.write('%s\n' % self.out_filename_raw)
             self.p_file.flush()
-        except:
-            print("#WARNING: write to pipe failed")
+        except Exception as err:
+            print("#WARNING: write to pipe failed: ", str(err))
         self.logmutex.release()
 
         #

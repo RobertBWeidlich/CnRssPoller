@@ -13,9 +13,11 @@ import os
 import sys
 import time
 import re
-import anydbm
-from cn_rss_doc import CnRssDocument
+# rbw - 5/2023 #import anydbm
+import dbm
+#from cn_rss_doc import CnRssDocument
 import socket
+from dotenv import load_dotenv
 
 
 def main(hostname):
@@ -228,7 +230,7 @@ def proc_rss_file(path_arg, ofp_arg, tmp_dir):
 
 def isUniqueGuid(guid_arg, source_arg, tstamp_arg, tmp_dir):
     """
-    Use anydbm to store guids.  Operate on today and yesterday -- anydbm
+    Use dbm to store guids.  Operate on today and yesterday -- dbm
     does not support deletion of old guids.
 
     dbm file name will be in the form "/tmp/cn_rss_guids-YYMMDD"
@@ -242,20 +244,20 @@ def isUniqueGuid(guid_arg, source_arg, tstamp_arg, tmp_dir):
     t_yesterday_parts = time.gmtime(t_yesterday)
 
     timestamp = '%04d%02d%02d.%02d%02d.%02d' % \
-                (t_today_parts.tm_year, \
-                 t_today_parts.tm_mon, \
-                 t_today_parts.tm_mday, \
-                 t_today_parts.tm_hour, \
-                 t_today_parts.tm_min, \
+                (t_today_parts.tm_year,
+                 t_today_parts.tm_mon,
+                 t_today_parts.tm_mday,
+                 t_today_parts.tm_hour,
+                 t_today_parts.tm_min,
                  t_today_parts.tm_sec)
 
     dbm_fname_today = '%04d%02d%02d.db' % \
-                      (t_today_parts.tm_year, \
-                       t_today_parts.tm_mon, \
+                      (t_today_parts.tm_year,
+                       t_today_parts.tm_mon,
                        t_today_parts.tm_mday)
     dbm_fname_yesterday = '%04d%02d%02d.db' % \
-                          (t_yesterday_parts.tm_year, \
-                           t_yesterday_parts.tm_mon, \
+                          (t_yesterday_parts.tm_year,
+                           t_yesterday_parts.tm_mon,
                            t_yesterday_parts.tm_mday)
 
     # dbm_pname_today =     '%s%s%s%s' % \
@@ -280,7 +282,7 @@ def isUniqueGuid(guid_arg, source_arg, tstamp_arg, tmp_dir):
     #
     # first check today's dbm file
     #
-    db_today = anydbm.open(dbm_pname_today, 'c')
+    db_today = dbm.open(dbm_pname_today, 'c')
     try:
         # ERROR - 110216.0750 - for unicode characters
         # guid_arg_str = str(guid_arg) # error here
@@ -288,7 +290,7 @@ def isUniqueGuid(guid_arg, source_arg, tstamp_arg, tmp_dir):
             is_unique = False
         else:
             db_today[db_key] = timestamp  # register this key
-            db_yesterday = anydbm.open(dbm_pname_yesterday, 'c')
+            db_yesterday = dbm.open(dbm_pname_yesterday, 'c')
             if db_key in db_yesterday:
                 # confirm this feature works...
                 print('# found in yesterday, not today: \"%s\"' % db_key)
@@ -304,9 +306,9 @@ def isUniqueGuid(guid_arg, source_arg, tstamp_arg, tmp_dir):
 
 
 def clean_text(text_arg):
-    ##
-    ## 1. delete all html markup -- anything enclosed in '<' and '>' characters
-    ##
+    #
+    # 1. delete all html markup -- anything enclosed in '<' and '>' characters
+    #
     str_new = ''
     sstate = True
     for c in text_arg:
@@ -408,6 +410,27 @@ def set_output_path_proc(base_dir_arg):
 
 
 if __name__ == '__main__':
+    # set library locations - alternative to setting PYTHONPATH
+    # todo: set all libraries to a root path and use "import a.b.lib"
+    cwd = os.getcwd() # current directory of this python script
+    libpath1 = os.sep.join([cwd, '..', '..', 'cn_xml_doc', 'py'])
+    sys.path.append(libpath1)
+    libpath2 = os.sep.join([cwd, '..', '..', 'utils', 'kafka'])
+    sys.path.append(libpath2)
+    libpath3 = os.sep.join([cwd, '..', '..', 'utils', 'solr', 'py'])
+    sys.path.append(libpath3)
+    print(f"sys.path now: {sys.path}")
+
+    # load environmental variables
+    dotenvpath = os.sep.join([cwd, '..', 'config', '.env'])
+    print(f"envpath: \"{dotenvpath}\"")
+    load_dotenv(dotenv_path=dotenvpath)
+
+    #from cn_hpe_cfg import CnHpeCfg
+    #from cn_hp_thr import CnHpThr
+    #from cn_hp_utils import get_current_utc_hms
+    from cn_rss_doc import CnRssDocument
+
     if len(sys.argv) < 2:
         # sys.stderr.write("usage: %s <config-file>\n" % sys.argv[0])
         # sys.exit(1)

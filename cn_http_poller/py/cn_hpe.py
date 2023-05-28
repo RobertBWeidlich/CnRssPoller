@@ -3,7 +3,7 @@
 ########################################################################
 # file:    cn_hpe.py (HTTP Poll Engine)
 # author:  rbw
-# date:    Mon Feb 15 13:40:54 EST 2021
+# date:    Sun May 28 17:51:18 EDT 2023
 # purpose: periodically poll list of HTTP sites for HTML, RSS, and Atom
 #          data
 # dependencies:
@@ -12,6 +12,7 @@
 import os, sys, urllib, time
 import threading
 import socket
+from dotenv import load_dotenv
 #from cn_hpe_cfg import CnHpeCfg
 #from cn_hp_thr import CnHpThr
 #from cn_hp_utils import get_current_utc_hms
@@ -312,7 +313,7 @@ def set_output_path_proc(base_dir_arg):
 
 if __name__ == '__main__':
     # set library locations - alternative to setting PYTHONPATH
-    # todo: set all libraries to a root path and use "import lib.a.b"
+    # todo: set all libraries to a root path and use "import a.b.lib"
     cwd = os.getcwd() # current directory of this python script
     libpath1 = os.sep.join([cwd, '..', '..', 'cn_xml_doc', 'py'])
     sys.path.append(libpath1)
@@ -321,6 +322,11 @@ if __name__ == '__main__':
     libpath3 = os.sep.join([cwd, '..', '..', 'utils', 'solr', 'py'])
     sys.path.append(libpath3)
     print(f"sys.path now: {sys.path}")
+
+    # load environmental variables
+    dotenvpath = os.sep.join([cwd, '..', 'config', '.env'])
+    print(f"envpath: \"{dotenvpath}\"")
+    load_dotenv(dotenv_path=dotenvpath)
 
     from cn_hpe_cfg import CnHpeCfg
     from cn_hp_thr import CnHpThr
@@ -331,7 +337,7 @@ if __name__ == '__main__':
         #sys.stderr.write("usage: %s <config-file>\n" % sys.argv[0])
         configfile_path = os.sep.join([cwd, '..', 'config', 'cn_hpe.cfg'])
         print(cwd)
-        print("using configuration file \"{configfile_path}\"")
+        print(f"using configuration file \"{configfile_path}\"")
     else:
         configfile_path = sys.argv[1]
 
