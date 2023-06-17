@@ -6,7 +6,8 @@
 # purpose: write RSS data, in JSON format to Kafka topic
 ########################################################################
 # import os, sys, time, re, anydbm
-import sys, os
+import sys
+import os
 from kafka import KafkaProducer
 
 

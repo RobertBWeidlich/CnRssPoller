@@ -14,6 +14,10 @@ NiFi, which should either be completed or removed.
 The goals of this version -- version 3.0 -- are to:
 1. Use Pycharm and/or VSCode as development environment
 1. Convert from Python 2 to Python 3
+1. Produce JSON output
+1. Clean up text (convert characters such as "&#038;")
+1. Downstream analysis, using Spacy, Hugging Face, etc.
+1. Find issue of process halting ~monthly
 1. Use dynaconf to manage configuration parameters; maintain parameters
 in "settings.toml", ".secrets.toml", and ".env"
 1. Set Python root directory, and import libraries relative to that
@@ -23,8 +27,6 @@ directory ("import a.b.function")
 1. Convert archived data to JSON
 1. Log errors using Python logging, write log files to /var/log/cn_rss_poller/
 1. Generate metrics, manage using ??? tools
-1. Clean up text (convert characters such as "&#038;")
-1. Downstream analysis, using Spacy, Hugging Face, etc.
 
 <h3>Notes</h3>
 1. Store all python artifacts and dependencies in directory "venv/".

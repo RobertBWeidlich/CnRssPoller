@@ -7,11 +7,13 @@
 # purpose: maintain information from CN HTTP Poller Exec (cn_hpe.py)
 #          configuration file
 ########################################################################
-import sys, time, os
+import sys
+import time
+import os
 
 
 # class cn_hpe_cfg():
-class CnHpeCfg():
+class CnHpeCfg:
 
     def __init__(self, cfg_file_arg):
         self.cfg_file = cfg_file_arg
@@ -45,7 +47,7 @@ class CnHpeCfg():
         # print('self.last_update_time: %f' % self.last_update_time)
         # print('last_mod_time:         %f' % last_mod_time)
         # if (last_mod_time > self.last_update_time):
-        if (last_mod_time < self.last_update_time):
+        if last_mod_time < self.last_update_time:
             return False
         # print('FILE MODIFED')
 
@@ -100,8 +102,8 @@ class CnHpeCfg():
             toks = line.split()
             # print("toks: " + str(toks))
             if len(toks) < 3:
-                sys.stderr.write( \
-                    'WARNING: config file \"%s\" line %d: expecting 3 tokens%s' \
+                sys.stderr.write(
+                    'WARNING: config file \"%s\" line %d: expecting 3 tokens%s'
                     % (self.cfg_file, line_num, os.linesep))
                 continue
 
@@ -135,7 +137,7 @@ class CnHpeCfg():
                 # else:
                 #  print(' %d' % i)
 
-        tnow = time.time();
+        tnow = time.time()
         self.last_update_time = tnow
 
     #
@@ -145,10 +147,10 @@ class CnHpeCfg():
         print('')
         print('dumping configuration:')
         print(' Name to URL dictionary:')
-        #keys = self.n2u_dict.keys()
+        # keys = self.n2u_dict.keys()
         keys = list(self.n2u_dict.keys())
         print(f"type(keys): {type(keys)}")
-        #keys.sort()
+        # keys.sort()
 
         #
         # first size the columns
@@ -161,8 +163,10 @@ class CnHpeCfg():
             kl = len(k)
             v = self.n2u_dict[k]
             vl = len(v)
-            if kl > max1: max1 = kl
-            if vl > max2: max2 = vl
+            if kl > max1:
+                max1 = kl
+            if vl > max2:
+                max2 = vl
             # print('max1: %d' % max1)
             # print('max2: %d' % max2)
         print('')

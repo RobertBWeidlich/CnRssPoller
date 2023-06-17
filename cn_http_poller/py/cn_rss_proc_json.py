@@ -18,18 +18,25 @@ import os
 import sys
 import time
 import re
-import anydbm
+import dbm
 import socket
 import json
 import uuid
 from time import gmtime
 from time import strftime
-from cn_rss_doc import CnRssDocument
+from dotenv import load_dotenv
+
+#from cn_rss_doc import CnRssDocument
 #from cn_hpe_json_kafka_producer import CnHpeJsonKafkaProducer
 
 ##KAFKA_URLS = ["localhost:9092"]
 #KAFKA_URLS = "localhost:9092"
 #KAFKA_TOPIC = "cnrp-nrt-feed"
+
+def test_dict(pd: dict):
+    # examine types of all dictionary values of pd
+    for key, value in pd.items():
+        print(f"key: \"{key}\", value_type: {type(value)}, value: \"{value}\"")
 
 
 def main(hostname):
@@ -39,58 +46,58 @@ def main(hostname):
     #
     # (todo: put this in a separate file)
     #
-    if not 'CN_HOME' os.environ:
-        print 'ERROR: environmental variable \'CN_HOME\' not defined'
+    if not 'CN_HOME' in os.environ:
+        print('ERROR: environmental variable \'CN_HOME\' not defined')
         sys.exit(1)
     ENV_CN_HOME = os.environ['CN_HOME']
     if not os.path.exists(ENV_CN_HOME):
-        print 'ERROR: directory \"' + ENV_CN_HOME + '\" ' + \
+        print('ERROR: directory \"' + ENV_CN_HOME + '\" ' + \
               'defined by environmental ' + \
-              'variable \'CN_HOME\'' + ' does not exist'
+              'variable \'CN_HOME\'' + ' does not exist')
         sys.exit(1)
 
     if not 'CN_DATA' in os.environ:
-        print 'ERROR: environmental variable \'CN_DATA\' not defined'
+        print('ERROR: environmental variable \'CN_DATA\' not defined')
         sys.exit(1)
     ENV_CN_DATA = os.environ['CN_DATA']
     if not os.path.exists(ENV_CN_DATA):
-        print 'ERROR: directory \"' + ENV_CN_DATA + '\" ' + \
+        print('ERROR: directory \"' + ENV_CN_DATA + '\" ' + \
               ' defined by environmental ' + \
-              'variable \'CN_DATA\'' + ' does not exist'
+              'variable \'CN_DATA\'' + ' does not exist')
         sys.exit(1)
 
     if not 'CN_PIPE' in os.environ:
-        print 'ERROR: environmental variable \'CN_PIPE\' not defined'
+        print('ERROR: environmental variable \'CN_PIPE\' not defined')
         sys.exit(1)
     ENV_CN_PIPE = os.environ['CN_PIPE']
     if not os.path.exists(ENV_CN_PIPE):
         os.mkfifo(ENV_CN_PIPE)
-        print 'creating pipe file \"' + ENV_CN_PIPE + '\"'
-        # print 'ERROR: pipe file \"' + ENV_CN_PIPE + '\ " ' + \
+        print('creating pipe file \"' + ENV_CN_PIPE + '\"')
+        # print('ERROR: pipe file \"' + ENV_CN_PIPE + '\ " ' + \
         #      'defined by environmental ' + \
-        #      'variable \'CN_PIPE\'' + ' does not exist'
+        #      'variable \'CN_PIPE\'' + ' does not exist')
         # sys.exit(1)
 
     if not 'CN_TMP' in os.environ:
-        print 'ERROR: environmental variable \'CN_TMP\' not defined'
+        print('ERROR: environmental variable \'CN_TMP\' not defined')
         sys.exit(1)
     ENV_CN_TMP = os.environ['CN_TMP']
     if not os.path.exists(ENV_CN_TMP):
-        print 'ERROR: tmp file \"' + ENV_CN_TMP + '\" ' + \
+        print('ERROR: tmp file \"' + ENV_CN_TMP + '\" ' + \
               ' defined by environmental ' + \
-              'variable \'CN_TMP\'' + ' does not exist'
+              'variable \'CN_TMP\'' + ' does not exist')
         sys.exit(1)
 
     if not 'CN_WAIT_OFFSET' in os.environ:
-        print 'ERROR: environmental variable \'CN_WAIT_OFFSET\' not defined'
+        print('ERROR: environmental variable \'CN_WAIT_OFFSET\' not defined')
         sys.exit(1)
     ENV_CN_WAIT_OFFSET = os.environ['CN_WAIT_OFFSET']
 
-    print 'ENV_CN_HOME:        ' + ENV_CN_HOME
-    print 'ENV_CN_DATA:        ' + ENV_CN_DATA
-    print 'ENV_CN_PIPE:        ' + ENV_CN_PIPE
-    print 'ENV_CN_TMP:         ' + ENV_CN_TMP
-    print 'ENV_CN_WAIT_OFFSET: ' + ENV_CN_WAIT_OFFSET
+    print('ENV_CN_HOME:        ' + ENV_CN_HOME)
+    print('ENV_CN_DATA:        ' + ENV_CN_DATA)
+    print('ENV_CN_PIPE:        ' + ENV_CN_PIPE)
+    print('ENV_CN_TMP:         ' + ENV_CN_TMP)
+    print('ENV_CN_WAIT_OFFSET: ' + ENV_CN_WAIT_OFFSET)
 
     BASE_DIR_PROC = ENV_CN_DATA
     if not BASE_DIR_PROC.endswith(os.sep):
@@ -182,17 +189,17 @@ def proc_rss_file(path_arg, ofp_arg, tmp_dir):
             if pod_flag2:
                 if len(uid) < 1:
                     uid = item['url']
-                    print ''
-                    print '  item[guid]: \"%s\"' % item['guid']
-                    print '    type: ', type(item['guid'])
-                    print '    len:  ', len(item['guid'])
-                    print '  item[title]: \"%s\"' % item['title']
-                    print '  item[text]: \"%s\"' % item['text']
-                    print '  item[pubdate]: \"%s\"' % item['pubdate']
-                    print '  item[url]: \"%s\"' % item['url']
-                    print '  item[author]: \"%s\"' % item['author']
-                    print '  item[summary]: \"%s\"' % item['summary']
-                    print ''
+                    print('')
+                    print('  item[guid]: \"%s\"' % item['guid'])
+                    print('    type: ', type(item['guid']))
+                    print('    len:  ', len(item['guid']))
+                    print('  item[title]: \"%s\"' % item['title'])
+                    print('  item[text]: \"%s\"' % item['text'])
+                    print('  item[pubdate]: \"%s\"' % item['pubdate'])
+                    print('  item[url]: \"%s\"' % item['url'])
+                    print('  item[author]: \"%s\"' % item['author'])
+                    print('  item[summary]: \"%s\"' % item['summary'])
+                    print('')
 
         # if is_unique_guid(item['guid'], src, tstamp, tmp_dir):
         if is_unique_guid(uid, src, tstamp, tmp_dir):
@@ -206,9 +213,9 @@ def proc_rss_file(path_arg, ofp_arg, tmp_dir):
                 of.write('src:     %s\n' % src)
                 of.write('tstamp:  %s\n' % tstamp)
 
-            so['path'] = path_arg
-            so['src'] = src
-            so['tstamp'] = tstamp
+            so['path'] = str(path_arg)
+            so['src'] = str(src)
+            so['tstamp'] = str(tstamp)
 
             ## of.write('pubdate: %s\n' % item['pubdate'])
             ## of.write('author:  %s\n' % item['author'])
@@ -223,55 +230,60 @@ def proc_rss_file(path_arg, ofp_arg, tmp_dir):
                 of.write('author:  %s\n' % author_cl)
                 of.write('guid:    %s\n' % guid_cl)
                 of.write('url:     %s\n' % url_cl)
-            so['pubdate'] = pubdate_cl
-            so['author'] = author_cl
-            so['guid'] = guid_cl
-            so['url'] = url_cl
+            so['pubdate'] = str(pubdate_cl)
+            so['author'] = str(author_cl)
+            so['guid'] = str(guid_cl)
+            so['url'] = str(url_cl)
 
             text_title_clean = clean_text(item['title'])
             try:
                 if pod_flag:
                     of.write('title:   %s\n' % text_title_clean)
-                so['title'] = text_title_clean
+                so['title'] = str(text_title_clean)
             except:
                 try:
                     if pod_flag:
                         of.write('title:   %s\n' % text_title_clean.encode('latin-1', 'replace'))
-                    so['title'] = text_title_clean.encode('latin-1', 'replace')
+                    so['title'] = str(text_title_clean.encode('latin-1', 'replace'))
                 except:
                     if pod_flag:
                         of.write('#ERROR: can\'t print title...\n')
                     hstr = hexdump(text_title_clean)
                     if pod_flag:
                         of.write('%s\n' % hstr)
-                    so['title'] = hstr
+                    so['title'] = str(hstr)
 
             sum_cl = item['summary'].encode('latin-1', 'replace')
             if pod_flag:
                 of.write('summary: %s\n' % sum_cl)
-            so['summary'] = sum_cl
+            so['summary'] = str(sum_cl)
 
             text1 = clean_text(item['text'])
             try:
                 if pod_flag:
                     of.write('text1:   %s\n' % text1)
-                so['text1'] = text1
+                so['text1'] = str(text1)
             except:
                 try:
                     if pod_flag:
                         of.write('text1:  %s\n' % text1.encode('latin-1', 'replace'))
-                    so['text1'] = text1.encode('latin-1', 'replace')
+                    so['text1'] = str(text1.encode('latin-1', 'replace'))
                 except:
                     if pod_flag:
                         of.write('#ERROR: can\'t print text1...\n')
                     hstr = hexdump(text1)
                     if pod_flag:
                         of.write('%s\n' % hstr)
-                    so['text1'] = hstr
+                    so['text1'] = str(hstr)
 
             # of.write('...\n')
             if pod_flag:
                 of.write('end-item:\n')
+
+            # additional cleanup - Thu Jun  8 17:54:10 EDT 2023
+            so['text0'] = item['text'] # raw text
+            # this doesn't work...
+            #so['text2'] = bytes(text1, 'utf-8').decode('unicode_escape')
 
             #
             # generate timestamp in the form "2017-10-02T14:00:39.641Z"
@@ -284,12 +296,14 @@ def proc_rss_file(path_arg, ofp_arg, tmp_dir):
             t_part1 = strftime("%Y-%m-%dT%H:%M:%S", gmtime())
             msecs_part = str("%0.3f" % (float(tnow) - float(int(tnow))))[2:]
             t_whole = t_part1 + "." + msecs_part + "Z"
-            so['date_ingested'] = t_whole
+            so['date_ingested'] = str(t_whole)
 
             #
             # generate a UUID for cnrp_id
             #
             so['cnrp_id'] = str(uuid.uuid4())
+
+            #test_dict(so)
 
             #
             # convert so python object to JSON and write to file
@@ -297,14 +311,15 @@ def proc_rss_file(path_arg, ofp_arg, tmp_dir):
             jo = None
             try:
                 jo = json.dumps(so, sort_keys=True, indent=2)  ## error here - Thu Sep  6 13:39:24 PDT 2018
-            except:
+            except Exception as err:
+                of.write(f"JSON conversion failed (1): {err}")
                 try:
                     jo = json.dumps(so, sort_keys=True, indent=2, encoding='latin1')
                 except:
                     try:
                         jo = json.dumps(so, sort_keys=True, indent=2, ensure_ascii=False)
-                    except:
-                        of.write("#JSON conversion failed\n")
+                    except Exception as err:
+                        of.write(f"#JSON conversion failed (3): {err}\n")
             if jo is not None:
                 of.write(jo)
                 # write to kafka
@@ -375,7 +390,7 @@ def is_unique_guid(guid_arg, source_arg, tstamp_arg, tmp_dir):
     #
     # first check today's dbm file
     #
-    db_today = anydbm.open(dbm_pname_today, 'c')
+    db_today = dbm.open(dbm_pname_today, 'c')
     try:
         # ERROR - 110216.0750 - for unicode characters
         # guid_arg_str = str(guid_arg) # error here
@@ -383,7 +398,7 @@ def is_unique_guid(guid_arg, source_arg, tstamp_arg, tmp_dir):
             is_unique = False
         else:
             db_today[db_key] = timestamp  # register this key
-            db_yesterday = anydbm.open(dbm_pname_yesterday, 'c')
+            db_yesterday = dbm.open(dbm_pname_yesterday, 'c')
             if db_key in db_yesterday:
                 # confirm this feature works...
                 print('# found in yesterday, not today: \"%s\"' % db_key)
@@ -419,9 +434,67 @@ def clean_text(text_arg):
     str1 = str_new.strip()
     # return str1
 
+    #
+    # 2. convert Unicode in form \u????
+    #   https://www.ou.edu/research/electron/internet/special.shtml
+    #   https://en.wikipedia.org/wiki/List_of_Unicode_characters
+    #
+    str1 = str1.replace("\u2013", " - ")
+    str1 = str1.replace("\u2014", " -- ")
+    str1 = str1.replace("\u2018", "'")
+    str1 = str1.replace("\u2019", "'")
+    str1 = str1.replace("\u201c", '"')
+    str1 = str1.replace("\u201C", '"')
+    str1 = str1.replace("\u201d", '"')
+    str1 = str1.replace("\u201D", '"')
+    str1 = str1.replace("\u2026", '...')
+    str1 = str1.replace("\u00a0", ' ')
+    str1 = str1.replace("\u00A0", ' ')
+    str1 = str1.replace("\u00f1", 'n') # Latin Small Letter N with tilde
+    str1 = str1.replace("\u00F1", 'n') # Latin Small Letter N with tilde
+
+    # 3. convert HTML in form "&????;"
+    # & nbsp; & mdash; & nbsp;
+    str1 = str1.replace("&nbsp;", ' ')
+    str1 = str1.replace("&mdash;", ' -- ')
+    str1 = str1.replace("&hellip;", ' ... ')
+    str1 = str1.replace("&lsquo;", "\"")
+    str1 = str1.replace("&rsquo;", "\"")
+    str1 = str1.replace("&ldquo;", "\"")
+    str1 = str1.replace("&rdquo;", "\"")
+
+    str1 = str1.replace("&#x2018;", "'")
+    str1 = str1.replace("&#x2019;", "'")
+    str1 = str1.replace("&#038;", " & ")
+    str1 = str1.replace("&#8216;", "'")
+    str1 = str1.replace("&#8217;", "'")
+    str1 = str1.replace("&#x201c", "'")
+    str1 = str1.replace("&#x201C", "'")
+    str1 = str1.replace("&#x201d", "'")
+    str1 = str1.replace("&#x201D", "'")
+    str1 = str1.replace("&#x2014", "'")
+    str1 = str1.replace("&#x200b;", "'")
+    str1 = str1.replace("&#x200B;", "'")
+
+    # 4. Others...
+    str1 = str1.replace("\n", ' ')
+
+    #   "text1": "ion's beliefs &#x2014; except ftors. &#x201C;The
+    #   SBC be &#x2018;CLOSELY' NOT &#x2018;completely'
+    #   Our BF&#x26;M2000 is 4,032 words.  men. We&#x27;re 99.9999999999% in agreement!
+    #   Is ENOUGH?&#x201D; Warren tweeted on Sunday.&#x22;I&#x27;m not making this
+    #   stuff up,&#x22; he added on Monday. &#x22;This is the history
+    #   of the SBC: After...",
+
+
+
+
     ##
     ## 9. line wrap
     ##
+    LINE_WRAP = False
+    if not LINE_WRAP:
+        return str1
     str2 = ''
     l_count = 0
     str2 += '\n '
@@ -503,6 +576,28 @@ def set_output_path_proc(base_dir_arg):
 
 
 if __name__ == '__main__':
+
+    # set library locations - alternative to setting PYTHONPATH
+    # todo: set all libraries to a root path and use "import a.b.lib"
+    cwd = os.getcwd() # current directory of this python script
+    libpath1 = os.sep.join([cwd, '..', '..', 'cn_xml_doc', 'py'])
+    sys.path.append(libpath1)
+    libpath2 = os.sep.join([cwd, '..', '..', 'utils', 'kafka'])
+    sys.path.append(libpath2)
+    libpath3 = os.sep.join([cwd, '..', '..', 'utils', 'solr', 'py'])
+    sys.path.append(libpath3)
+    print(f"sys.path now: {sys.path}")
+
+    # load environmental variables
+    dotenvpath = os.sep.join([cwd, '..', 'config', '.env'])
+    print(f"envpath: \"{dotenvpath}\"")
+    load_dotenv(dotenv_path=dotenvpath)
+
+    #from cn_hpe_cfg import CnHpeCfg
+    #from cn_hp_thr import CnHpThr
+    #from cn_hp_utils import get_current_utc_hms
+    from cn_rss_doc import CnRssDocument
+
     if len(sys.argv) < 2:
         # sys.stderr.write("usage: %s <config-file>\n" % sys.argv[0])
         # sys.exit(1)

@@ -139,9 +139,9 @@ def main(cfg_file_arg, hostname):
     threads = []
     loopi = 0
     while 1:
-        ##
-        ## wait until top of the minute + WAIT_OFFSET
-        ##
+        #
+        # wait until top of the minute + WAIT_OFFSET
+        #
         hms = get_current_utc_hms()
 
         sec = hms[2]
@@ -219,7 +219,7 @@ def set_output_path_raw(base_dir_arg, tag_arg):
 
     # generate current UTC timestamp
     # tnow = time.time()
-    ##anow = time.asctime(time.localtime(tnow))
+    # anow = time.asctime(time.localtime(tnow))
     # anow = time.asctime(time.gmtime(tnow))
     tnow = time.time()
     tn = time.gmtime(tnow)
